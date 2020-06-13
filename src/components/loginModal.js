@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
 
 class loginModel extends Component{
@@ -24,25 +24,75 @@ class loginModel extends Component{
       </Modal.Header>
       <Modal.Body>
       <MDBContainer>
-  <MDBRow>
-    <MDBCol >
-      <form>
-        <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
-          Your email
-        </label>
-        <input type="email" id="defaultFormLoginEmailEx" className="form-control" />
-        <br />
-        <label htmlFor="defaultFormLoginPasswordEx" className="grey-text">
-          Your password
-        </label>
-        <input type="password" id="defaultFormLoginPasswordEx" className="form-control" />
-        <div className="text-center mt-4">
-          <MDBBtn color="indigo" type="submit">Login</MDBBtn>
-        </div>
-      </form>
-    </MDBCol>
-  </MDBRow>
-</MDBContainer>
+      <MDBRow>
+        <MDBCol >
+            <MDBCardBody className="mx-4">
+              <MDBInput
+                label="Your email"
+                group
+                type="email"
+                validate
+                error="wrong"
+                success="right"
+              />
+              <MDBInput
+                label="Your password"
+                group
+                type="password"
+                validate
+                containerClass="mb-0"
+              />
+              <p className="font-small blue-text d-flex justify-content-end pb-3">
+                Forgot
+                <a href="#!" className="blue-text ml-1">
+
+                  Password?
+                </a>
+              </p>
+              <div className="text-center mb-3">
+                <MDBBtn
+                  type="button"
+                  gradient="blue"
+                  rounded
+                  className="btn-block z-depth-1a"
+                >
+                  Sign in
+                </MDBBtn>
+              </div>
+              <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
+
+                or Sign in with:
+              </p>
+              <div className="row my-3 d-flex justify-content-center">
+                <MDBBtn
+                  type="button"
+                  color="white"
+                  rounded
+                  className="mr-md-3 z-depth-1a"
+                >
+                  <MDBIcon fab icon="facebook-f" className="blue-text text-center" />
+                </MDBBtn>
+                <MDBBtn
+                  type="button"
+                  color="white"
+                  rounded
+                  className="mr-md-3 z-depth-1a"
+                >
+                  <MDBIcon fab icon="twitter" className="blue-text" />
+                </MDBBtn>
+                <MDBBtn
+                  type="button"
+                  color="white"
+                  rounded
+                  className="z-depth-1a"
+                >
+                  <MDBIcon fab icon="google-plus-g" className="blue-text" />
+                </MDBBtn>
+              </div>
+            </MDBCardBody>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
       </Modal.Body>
     </Modal>
             </div>

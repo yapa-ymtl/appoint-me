@@ -16,7 +16,7 @@ class ValidationForm extends React.Component {
     this.form.useRules({
         name: "required",
         email: "required|email",
-        phone_number: "required|numeric|digits_between:10,12",
+        phone_number: "required|numeric|digits:10,10",
     });
     this.form.onformsubmit = (fields) => {
       // Do you ajax calls here.
