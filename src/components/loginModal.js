@@ -26,7 +26,7 @@ class loginModel extends Component{
       <MDBContainer>
       <MDBRow>
         <MDBCol >
-            <MDBCardBody className="mx-4">
+            <MDBCardBody className="mx-2 sm-10">
               <MDBInput
                 label="Your email"
                 group

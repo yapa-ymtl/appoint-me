@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.jumbotron{
+  height:-50;
+  background-size: cover;
+  background-position: center;
+  background-image: url(../src/assets/queue.jpg);
+  }
