@@ -39,26 +39,24 @@ render() {
   let addLoginModalClose=()=>this.setState({addLoginModalShow:false});
   return (
     <>
-      <MDBNavbar color="default-color" className={{color:'#075E54'}} dark expand="sm">
-        <Link to="/">
-        <MDBNavbarBrand href="/" className="m--2"><img src={image2} alt="AppointMe logo" height="40"></img>
-        </MDBNavbarBrand>
-        </Link>
+      <MDBNavbar color="default-color" className={{color:'#075E54'}} dark expand="sm" scrolling fixed="top">
+        <MDBNavLink to="/"><img src={image2} alt="AppointMe logo" height="30"></img>
+        </MDBNavLink>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
           <MDBNavbarNav left>
-            <MDBNavItem>
+            {/* <MDBNavItem>
               <MDBNavLink to="/mylist">My List</MDBNavLink>
-            </MDBNavItem>
+            </MDBNavItem> */}
             <MDBNavItem>
-              <MDBDropdown>
+              <MDBDropdown >
                 <MDBDropdownToggle nav caret color="primary">
-                  <div className="d-none d-md-inline">Dropdown</div>
+                  My List
                 </MDBDropdownToggle>
                 <MDBDropdownMenu basic className="dropdown-default">
-                  <MDBDropdownItem href="#!" >Today List</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Past List</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Future List</MDBDropdownItem></MDBDropdownMenu>
+                <MDBNavItem><MDBDropdownItem href="#!" >Today List</MDBDropdownItem></MDBNavItem>
+                <MDBNavItem><MDBDropdownItem href="#!">Past List</MDBDropdownItem></MDBNavItem>
+                <MDBNavItem><MDBDropdownItem href="#!">Future List</MDBDropdownItem></MDBNavItem></MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
@@ -67,19 +65,27 @@ render() {
           </MDBNavbarNav>
           <MDBNavbarNav right>
             <MDBNavItem>
-              <MDBDropdown dropleft>
+              <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  <MDBIcon icon="user" />
+                  {this.props.authenticated?<MDBIcon icon="user" />:<i class="fas fa-user-slash"></i>}
                 </MDBDropdownToggle>
-                <MDBDropdownMenu className="dropdown-default">
-                  <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true})}>Login</MDBDropdownItem>
-                  <LoginModel  show={this.state.addLoginModalShow} onHide={addLoginModalClose}/>
-                  <MDBDropdownItem onClick={()=>this.setState({addSignupModalShow:true})}>Signup Client</MDBDropdownItem>
-                  <SignupModel show={this.state.addSignupModalShow} onHide={addSignupModalClose}/>
-                  <MDBDropdownItem onClick={()=>this.setState({addSignupBusinessShow:true})}>Signup bussiness</MDBDropdownItem>
-                  <SignUpBusiness show={this.state.addSignupBusinessShow} onHide={addSignupBusinessClose}/>
-                  <MDBDropdownItem></MDBDropdownItem>
-                </MDBDropdownMenu>
+                  {
+                    this.props.authenticated ? 
+                    ( <MDBDropdownMenu className="dropdown-default">
+                      <MDBDropdownItem><i class="far fa-user"></i> Profile</MDBDropdownItem>
+                    <MDBDropdownItem><MDBIcon icon="sign-out-alt"/> Log out</MDBDropdownItem>
+                    </MDBDropdownMenu>)
+                    :
+                    (<MDBDropdownMenu className="dropdown-default">
+                    <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true})} to="/login">Login</MDBDropdownItem>
+                    <LoginModel  show={this.state.addLoginModalShow} onHide={addLoginModalClose}/>
+                    <MDBDropdownItem onClick={()=>this.setState({addSignupModalShow:true})}>Signup Client</MDBDropdownItem>
+                    <SignupModel show={this.state.addSignupModalShow} onHide={addSignupModalClose}/>
+                    <MDBDropdownItem onClick={()=>this.setState({addSignupBusinessShow:true})}>Signup bussiness</MDBDropdownItem>
+                    <SignUpBusiness show={this.state.addSignupBusinessShow} onHide={addSignupBusinessClose}/>
+                    </MDBDropdownMenu>)
+                   
+                  }
               </MDBDropdown>
             </MDBNavItem>
           </MDBNavbarNav>

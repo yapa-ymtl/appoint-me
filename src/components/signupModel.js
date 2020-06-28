@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
 import ReactFormInputValidation from "react-form-input-validation";
+import { withRouter } from 'react-router';
+import app from '../Config/base';
+
 
 class SignupModel extends Component{
     constructor(props) {
@@ -26,7 +29,26 @@ class SignupModel extends Component{
         password:"required|min:6",
         password_confirmation:"required|confirmed"
     });
+
+    this.handleChange=this.handleChange.bind(this)
+    this.handleSubmit=this.handleSubmit.bind(this)
+
     }
+    handleChange=(e)=>{
+      this.setState({
+        [e.target.id]:e.target.value
+      })
+    }
+    handleSubmit=(e) =>{
+      e.preventDefault();
+      /* try{
+        await app.auth().createUserWithEmailAndPassword(this.state.email.value, this.state.password.value);
+      } catch (error) {
+        alert(error);
+      } */
+    };
+
+
 
     render() {
         return (
@@ -47,16 +69,15 @@ class SignupModel extends Component{
 <MDBContainer>
   <MDBRow>
     <MDBCol >
-      <form>
+      <form onSubmit={this.handleSubmit} >
         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
           Your name
         </label>
         <input className="form-control"
           type="text"
-          name="name"
-          onBlur={this.form.handleBlurEvent}
-          onChange={this.form.handleChangeEvent}
-          value={this.state.fields.name}
+          id="name"
+          onChange={this.handleChange}
+          label="Your name"
         />
         <label className="error" style={{color:'red',fontSize:12}}>
           <i>{this.state.errors.name ? this.state.errors.name : ""}</i>
@@ -68,10 +89,8 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
           type="email"
-          name="email"
-          onBlur={this.form.handleBlurEvent}
-          onChange={this.form.handleChangeEvent}
-          value={this.state.fields.email}
+          id="email"
+          onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
           <i>{this.state.errors.email ? this.state.errors.email : ""}</i>
@@ -83,10 +102,8 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
         type="password" 
-        name="password"
-        onBlur={this.form.handleBlurEvent}
-        onChange={this.form.handleChangeEvent}
-        value={this.state.fields.password}
+        id="password"
+        onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
           <i>{this.state.errors.password ? this.state.errors.password : ""}</i>
@@ -98,25 +115,24 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
         type="password" 
-        name="password_confirmation"
-        onBlur={this.form.handleBlurEvent}
-        onChange={this.form.handleChangeEvent}
-        value={this.state.fields.password_confirmation}
+        id="password_confirmation"
+        onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
-          <i>{this.state.errors.password_confirmation ? console.log(this.state.password) : ""}</i>
+          <i>{this.state.password!=this.state.password_confirmation?"Passwords not match":""}</i>
         </label>        
         <br />
         <div className="text-center mt-4">
         <MDBBtn
-                  type="button"
                   gradient="blue"
                   rounded
                   className="btn-block z-depth-1a"
+                  type="submit"
                 >
                   Sign up
                 </MDBBtn>
         </div>
+      </form>
         <div className='footer pt-3 lighten-3'>
               <MDBRow className='d-flex justify-content-center'>
                 <p className='font-small mb-2 pt-3 {}'>
@@ -150,7 +166,6 @@ class SignupModel extends Component{
                 </MDBBtn>
               </div> 
             </div>
-      </form>
     </MDBCol>
   </MDBRow>
 </MDBContainer>

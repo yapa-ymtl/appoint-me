@@ -13,7 +13,7 @@ class SignuBusiness extends Component{
           fields: {
             name: "",
             email: "",
-            phone_number: "",
+            registration_num: "",
             password:"",
             password_confirmation:"",
           },
@@ -24,7 +24,7 @@ class SignuBusiness extends Component{
     this.form.useRules({
         name: "required",
         email: "required|email",
-        phone_number: "required|numeric|digits_between:10,12",
+        registration_num: "required|numeric",
         password:"required|min:6",
         password_confirmation:"required|confirmed"
     });
@@ -67,10 +67,10 @@ class SignuBusiness extends Component{
                         name="regNo"
                         onBlur={this.form.handleBlurEvent}
                         onChange={this.form.handleChangeEvent}
-                        value={this.state.fields.name}
+                        value={this.state.fields.registration_num}
                       />
                       <label className="error" style={{color:'red',fontSize:12}}>
-                        <i>{this.state.errors.name ? this.state.errors.name : ""}</i>
+                        <i>{this.state.errors.registration_num ? this.state.errors.registration_num : ""}</i>
                       </label>
                     </div>
                     <div class="col-sm-12 col-md-7">
@@ -90,6 +90,7 @@ class SignuBusiness extends Component{
                       <br />
                     </div>
                       <Types/>
+                      <div class="col-sm-12 col-md-6">
                       <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
                         Your password
                       </label>
@@ -103,8 +104,9 @@ class SignuBusiness extends Component{
                       <label className="error" style={{color:'red',fontSize:12}}>
                         <i>{this.state.errors.password ? this.state.errors.password : ""}</i>
                       </label>
-                      <br />
+                      </div>
 
+                      <div class="col-sm-12 col-md-6">
                       <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
                         Confirm password
                       </label>
@@ -118,7 +120,7 @@ class SignuBusiness extends Component{
                       <label className="error" style={{color:'red',fontSize:12}}>
                         <i>{this.state.errors.password_confirmation ? console.log(this.state.password) : ""}</i>
                       </label>        
-                      <br />
+                      </div>
                       <div className="text-center mt-4">
                       <MDBBtn
                                 type="button"
