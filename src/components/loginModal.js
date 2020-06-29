@@ -1,10 +1,10 @@
 import React,{Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
+import { MDBContainer,MDBAlert , MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
 import ReactFormInputValidation from "react-form-input-validation";
 import {Redirect} from 'react-router-dom'
-import { facebookProvider } from "../Config/base";
-import {app} from '../Config/base'
+import { app,facebookProvider } from '../Config/base'
+import firebase from 'firebase'
 
 
 class loginModel extends Component{
@@ -26,31 +26,45 @@ this.form.useRules({
     email: "required|email",
     password:"required",
 });
-
-this.handleChange=this.handleChange.bind(this)
-this.handleSubmit=this.handleSubmit.bind(this)
 this.authWithFacebook=this.authWithFacebook.bind(this)
 
 }
 authWithFacebook(){
     app.auth().signInWithPopup(facebookProvider).then((result,error)=>{
       if(error){
-        console.log("error with login facebook")
+        return(
+          <MDBAlert color="danger" >
+        Unable to login with Facebook
+      </MDBAlert>
+        )
       }
       else{
         this.setState({redirect:true})
       }
     })
 }
-handleChange=(e)=>{
-  this.setState({
-    [e.target.id]: e.target.value
-  })
-}
 
 handleSubmit=(e)=>{
-e.preventDefault();
-console.log(this.state.password );
+  
+    e.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode === 'auth/wrong-password') {
+    alert('Wrong password.');
+    } else {
+    alert(errorMessage);
+    }
+    console.log(error);
+    });
+}
+
+handleChange=(e)=>{
+this.setState({
+[e.target.id]: e.target.value
+})
 }
   render() {
     if(this.state.redirect===true){

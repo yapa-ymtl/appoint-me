@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
+import { MDBNavbar,MDBTooltip, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
 MDBDropdownToggle,MDBBtn, MDBDropdownMenu, MDBView ,MDBDropdownItem, MDBIcon } from "mdbreact";
 import { Link } from 'react-router-dom';
 
@@ -40,8 +40,12 @@ render() {
   return (
     <>
       <MDBNavbar color="default-color" className={{color:'#075E54'}} dark expand="sm" scrolling fixed="top">
+      <MDBTooltip placement="top">
         <MDBNavLink to="/"><img src={image2} alt="AppointMe logo" height="30"></img>
         </MDBNavLink>
+        <div>Back to Home</div>
+      </MDBTooltip>
+
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
           <MDBNavbarNav left>
@@ -60,7 +64,10 @@ render() {
               </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/About">About</MDBNavLink>
+              <MDBNavLink to="/about">About</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="#">Rate us</MDBNavLink>
             </MDBNavItem>
           </MDBNavbarNav>
           <MDBNavbarNav right>
@@ -72,12 +79,12 @@ render() {
                   {
                     this.props.authenticated ? 
                     ( <MDBDropdownMenu className="dropdown-default">
-                      <MDBDropdownItem><i class="far fa-user"></i> Profile</MDBDropdownItem>
-                    <MDBDropdownItem><MDBIcon icon="sign-out-alt"/> Log out</MDBDropdownItem>
+                      <MDBDropdownItem><i class="far fa-user"></i> Profile</MDBDropdownItem><link></link>
+                    <MDBDropdownItem><MDBIcon icon="sign-out-alt"/><Link to="/logout"> Log out</Link></MDBDropdownItem>
                     </MDBDropdownMenu>)
                     :
                     (<MDBDropdownMenu className="dropdown-default">
-                    <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true})} to="/login">Login</MDBDropdownItem>
+                    <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true})}>Login</MDBDropdownItem>
                     <LoginModel  show={this.state.addLoginModalShow} onHide={addLoginModalClose}/>
                     <MDBDropdownItem onClick={()=>this.setState({addSignupModalShow:true})}>Signup Client</MDBDropdownItem>
                     <SignupModel show={this.state.addSignupModalShow} onHide={addSignupModalClose}/>

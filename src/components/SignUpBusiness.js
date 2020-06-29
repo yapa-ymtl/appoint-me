@@ -98,8 +98,8 @@ class SignuBusiness extends Component{
                       type="password" 
                       name="password"
                       onBlur={this.form.handleBlurEvent}
-                      onChange={this.form.handleChangeEvent}
                       value={this.state.fields.password}
+                      onChange={this.form.handleChangeEvent}
                       />
                       <label className="error" style={{color:'red',fontSize:12}}>
                         <i>{this.state.errors.password ? this.state.errors.password : ""}</i>

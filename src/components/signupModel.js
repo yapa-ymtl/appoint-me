@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
-import { MDBContainer, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
+import { MDBContainer,MDBAlert, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
 import ReactFormInputValidation from "react-form-input-validation";
 import { withRouter } from 'react-router';
-import app from '../Config/base';
+//import { app } from '../Config/base'
+import firebase from 'firebase'
 
 
 class SignupModel extends Component{
@@ -30,23 +31,28 @@ class SignupModel extends Component{
         password_confirmation:"required|confirmed"
     });
 
-    this.handleChange=this.handleChange.bind(this)
-    this.handleSubmit=this.handleSubmit.bind(this)
-
     }
     handleChange=(e)=>{
       this.setState({
-        [e.target.id]:e.target.value
+        [e.target.name]:e.target.value
       })
     }
     handleSubmit=(e) =>{
       e.preventDefault();
-      /* try{
-        await app.auth().createUserWithEmailAndPassword(this.state.email.value, this.state.password.value);
-      } catch (error) {
-        alert(error);
-      } */
-    };
+
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode == 'auth/weak-password') {
+        alert('The password is too weak.');
+    } else {
+      alert(errorMessage);
+    }
+    console.log(error);
+  });
+  }
 
 
 
@@ -69,15 +75,16 @@ class SignupModel extends Component{
 <MDBContainer>
   <MDBRow>
     <MDBCol >
-      <form onSubmit={this.handleSubmit} >
-        <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-          Your name
+      <form onSubmit={this.handleSubmit}>
+      <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
+         Name
         </label>
         <input className="form-control"
           type="text"
-          id="name"
+          name="name"
+          onBlur={this.form.handleBlurEvent}
+          value={this.state.name}
           onChange={this.handleChange}
-          label="Your name"
         />
         <label className="error" style={{color:'red',fontSize:12}}>
           <i>{this.state.errors.name ? this.state.errors.name : ""}</i>
@@ -89,7 +96,9 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
           type="email"
-          id="email"
+          name="email"
+          onBlur={this.form.handleBlurEvent}
+          value={this.state.email}
           onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
@@ -102,7 +111,9 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
         type="password" 
-        id="password"
+        name="password"
+        onBlur={this.form.handleBlurEvent}
+        value={this.state.password}
         onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
@@ -115,11 +126,13 @@ class SignupModel extends Component{
         </label>
         <input className="form-control"
         type="password" 
-        id="password_confirmation"
+        name="password_confirmation"
+        onBlur={this.form.handleBlurEvent}
+        value={this.state.password_confirmation}
         onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
-          <i>{this.state.password!=this.state.password_confirmation?"Passwords not match":""}</i>
+          <i>{this.state.password!==this.state.password_confirmation?"Passwords not match":""}</i>
         </label>        
         <br />
         <div className="text-center mt-4">
