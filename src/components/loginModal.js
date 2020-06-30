@@ -1,10 +1,12 @@
 import React,{Component} from "react";
-import { MDBContainer,MDBAlert , MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
-import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
+import { MDBContainer,MDBAlert , MDBRow, MDBCol, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
+import {Modal} from 'react-bootstrap'
 import ReactFormInputValidation from "react-form-input-validation";
 import {Redirect} from 'react-router-dom'
 import { app,facebookProvider } from '../Config/base'
 import firebase from 'firebase'
+
+import { withRouter } from 'react-router-dom';
 
 
 class loginModel extends Component{
@@ -18,7 +20,7 @@ class loginModel extends Component{
       },
       errors: {},
 
-      redirect:false
+      redirect:false,
     };  
     
 this.form = new ReactFormInputValidation(this);
@@ -45,7 +47,7 @@ authWithFacebook(){
 }
 
 handleSubmit=(e)=>{
-  
+
     e.preventDefault();
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .catch(function(error) {
@@ -66,7 +68,15 @@ this.setState({
 [e.target.id]: e.target.value
 })
 }
+
+/* clickHandler=()=>
+{
+  this.props.closeLoginForForgetpswd()
+  this.setState({addForgetPasswordShow:true})
+} */
+
   render() {
+
     if(this.state.redirect===true){
       return <Redirect to ='/'/>
     }
@@ -97,9 +107,8 @@ this.setState({
             <MDBBtn gradient="blue" rounded className="btn-block z-depth-1a" type="submit" >Login</MDBBtn>
           </div>
         </form>
-
+        <a onClick={this.props.closeLoginForForgetpswd}>Forget password? </a>
         <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-
                 or Sign in with:
               </p>
               <div className="row my-3 d-flex justify-content-center">

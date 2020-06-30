@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Modal, Button, Row, Col, Form} from 'react-bootstrap'
-import { MDBContainer,MDBAlert, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
+import {Modal} from 'react-bootstrap'
+import { MDBContainer, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
 import ReactFormInputValidation from "react-form-input-validation";
 import { withRouter } from 'react-router';
 //import { app } from '../Config/base'

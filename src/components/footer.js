@@ -2,6 +2,7 @@ import React from 'react';
 import {MDBIcon,MDBBtn} from 'mdbreact'
 
 function Footer(props) {
+  //var href = this.props.history.createHref('https://www.facebook.com', myParams);
     return(
         <footer className="page-footer font-small special-color-dark pt-4 mr-0">
         
@@ -9,23 +10,23 @@ function Footer(props) {
         
             <ul className="text-center">
               <li className="list-inline-item">
-                <MDBBtn size="sm" tag="a"  social="fb">
-                    <MDBIcon fab icon="facebook-f" />
+                <MDBBtn size="sm" tag="a"  social="fb" >
+                  <a rel="noopener noreferrer" href="https://www.facebook.com" target="_blank"><MDBIcon fab icon="facebook-f" /></a>
                 </MDBBtn>
               </li>
               <li className="list-inline-item">
                 <MDBBtn size="sm" tag="a"  social="tw">
-                    <MDBIcon fab icon="twitter" />
+                <a rel="noopener noreferrer" href="https://www.twitter.com" target="_blank"><MDBIcon fab icon="twitter" /></a>
                 </MDBBtn>
               </li>
               <li className="list-inline-item">
               <MDBBtn size="sm" tag="a"  social="gplus">
-                    <MDBIcon fab icon="google-plus-g" />
+              <a rel="noopener noreferrer" href="https://www.google.com" target="_blank"><MDBIcon fab icon="google-plus-g" /></a>
                 </MDBBtn>
               </li>
               <li className="list-inline-item">
               <MDBBtn size="sm" tag="a"  social="li">
-                    <MDBIcon fab icon="linkedin-in" />
+              <a rel="noopener noreferrer" href="https://www.linkedin.com" target="_blank"><MDBIcon fab icon="linkedin-in" /></a>
                 </MDBBtn>
               </li>
               

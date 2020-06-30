@@ -4,7 +4,7 @@ import Footer from './footer'
 import About from './About'
 import Mylist from './Mylist'
 import Home from './home'
-import Logout from './logout'
+import ResetPassword from './resetPassword'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import {app,base} from '../Config/base'
 
@@ -69,7 +69,7 @@ class Main extends Component {
                         <Route path="/" exact component={Home}/>
                         <Route path="/about" component={About}/>
                         <Route path="/mylist" component={Mylist}/>
-                        <Route path="/logout" component={Logout}/>
+                        <Route path="/rest" component={ResetPassword}/>
                         </Switch>
                         <Footer/>
                     </div>
