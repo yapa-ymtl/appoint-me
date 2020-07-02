@@ -46,6 +46,17 @@ authWithFacebook(){
     })
 }
 
+authWithGoogle(){
+  var provider = new firebase.auth.TwitterAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    // For accessing the Twitter API.
+    var token = result.credential.accessToken;
+    var secret = result.credential.secret;
+    // The signed-in user info.
+    var user = result.user;
+  });
+}
+
 handleSubmit=(e)=>{
 
     e.preventDefault();
@@ -134,7 +145,7 @@ this.setState({
                   rounded
                   className="z-depth-1a"
                 >
-                  <MDBIcon fab icon="google-plus-g" className="blue-text" />
+                  <MDBIcon fab icon="google-plus-g" className="blue-text" onClick={this.authWithGoogle} />
                 </MDBBtn>
               </div>
       </MDBCardBody>

@@ -28,12 +28,12 @@ handleSubmit=()=>{
         // The URL to redirect to for sign-in completion. This is also the deep
         // link for mobile redirects. The domain (www.example.com) for this URL
         // must be whitelisted in the Firebase Console.
-        url: 'http://localhost:3000/',
+        url: 'http://localhost:3000',
        
         // This must be true.
         handleCodeInApp: true
       };
-      firebase.auth().sendSignInLinkToEmail(this.state.email, actionCodeSettings)
+      firebase.auth().sendPasswordResetEmail(this.state.email, actionCodeSettings)
           .then(function() {
            alert('Check your email..')
            console.log('sucess')

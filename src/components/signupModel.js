@@ -19,7 +19,8 @@ class SignupModel extends Component{
             password:"",
             password_confirmation:"",
           },
-          errors: {}
+          errors: {},
+          creatUser:true,
         };  
         
     this.form = new ReactFormInputValidation(this);
@@ -37,24 +38,47 @@ class SignupModel extends Component{
         [e.target.name]:e.target.value
       })
     }
+
     handleSubmit=(e) =>{
       e.preventDefault();
 
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-    .catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    if (errorCode == 'auth/weak-password') {
-        alert('The password is too weak.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-  });
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch((error) =>{
+      // Handle Errors here.
+      
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("error code "+ errorCode);
+      console.log("error "+ error)
+      if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+          this.setState({
+            creatUser:false,
+          })
+      } else {
+        alert(errorMessage);
+        this.setState({
+          creatUser:false,
+        })
+      }
+           
+    })
+    .then((data)=>{
+      if(this.state.creatUser)
+      {
+        console.log("update database");
+        console.log("uid = "+ data.user.uid)
+      firebase.database().ref('Users/Clients/'+data.user.uid).push().set({
+        username: this.state.name,
+        email: this.state.email,
+      }); 
+      }
+      this.setState({
+        creatUser:true,
+      })
+    })    
+        
   }
-
-
 
     render() {
         return (
@@ -132,7 +156,7 @@ class SignupModel extends Component{
         onChange={this.handleChange}
         />
         <label className="error" style={{color:'red',fontSize:12}}>
-          <i>{this.state.password!==this.state.password_confirmation?"Passwords not match":""}</i>
+          <i>{this.state.password!==this.state.password_confirmation ?"Passwords not match":""}</i>
         </label>        
         <br />
         <div className="text-center mt-4">
@@ -186,8 +210,7 @@ class SignupModel extends Component{
     </Modal>
             </div>
         )
-    }
-    
+  }
 }
 
 export default SignupModel;

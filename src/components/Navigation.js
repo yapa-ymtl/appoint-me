@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { MDBNavbar,MDBTooltip, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
 MDBDropdownToggle,MDBBtn, MDBDropdownMenu, MDBView ,MDBDropdownItem, MDBIcon } from "mdbreact";
-import { Link } from 'react-router-dom';
+import { Router,Link } from 'react-router-dom';
+import firebase from 'firebase'
 
 import SignupModel from './signupModel'
 import LoginModel from './loginModal'
@@ -23,10 +24,32 @@ constructor(props) {
      addLoginModalShow:false,
      addSignupBusinessShow:false,
      addForgetPasswordShow:false,
+     prevScrollpos: window.pageYOffset,
+      visible: true
   }
 
   this.closeLoginForForgetpswd=this.closeLoginForForgetpswd.bind(this)
 }
+
+componentDidMount() {
+  window.addEventListener("scroll", this.handleScroll);
+}
+
+componentWillUnmount() {
+  window.removeEventListener("scroll", this.handleScroll);
+}
+
+handleScroll = () => {
+  const { prevScrollpos } = this.state;
+
+  const currentScrollPos = window.pageYOffset;
+  const visible = prevScrollpos > currentScrollPos;
+
+  this.setState({
+    prevScrollpos: currentScrollPos,
+    visible
+  });
+};
 
 closeLoginForForgetpswd(){
   console.log('change to true');
@@ -44,6 +67,13 @@ toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
 }
 
+handleLogout=()=>{
+  firebase.auth().signOut( )
+  this.setState({
+    isOpen: !this.state.isOpen 
+  })
+}
+
 render() {
   let addSignupModalClose=()=>this.setState({addSignupModalShow:false});
   let addSignupBusinessClose=()=>this.setState({addSignupBusinessShow:false});
@@ -51,9 +81,10 @@ render() {
   let addForgetPasswordClose=()=>this.setState({addForgetPasswordShow:false});
   return (
     <div>
+      <header>
       <MDBNavbar color="default-color" className={{color:'#075E54'}} dark expand="sm" scrolling fixed="top">
       <MDBTooltip placement="top">
-        <MDBNavLink to="/" ><img src={image2} alt="AppointMe logo" height="30"/> <a style={{color:'white'}} className=".d-none .d-md-block .d-lg-none"> AppointMe</a>
+        <MDBNavLink to="/" onClick={()=>{this.setState({ isOpen: false });}}><img src={image2} alt="AppointMe logo" height="30"/> <a style={{color:'white'}} className=".d-none .d-md-block .d-lg-none"> AppointMe</a>
         </MDBNavLink>
         <div>Back to Home</div>
       </MDBTooltip>
@@ -76,10 +107,10 @@ render() {
               </MDBDropdown>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/about">About</MDBNavLink>
+              <MDBNavLink to="/about" onClick={()=>{this.setState({ isOpen:false});}}>About</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#">Rate us</MDBNavLink>
+              <MDBNavLink to="/rate" onClick={()=>{this.setState({ isOpen:false});}}>Rate us</MDBNavLink>
             </MDBNavItem>
           </MDBNavbarNav>
           <MDBNavbarNav right>
@@ -92,16 +123,16 @@ render() {
                     this.props.authenticated ? 
                     ( <MDBDropdownMenu className="dropdown-default">
                       <MDBDropdownItem><i class="far fa-user"></i> Profile</MDBDropdownItem><link></link>
-                    <MDBDropdownItem><MDBIcon icon="sign-out-alt"/><Link to="/logout"> Log out</Link></MDBDropdownItem>
+                    <MDBDropdownItem onClick={this.handleLogout}><MDBIcon icon="sign-out-alt"/> Log out</MDBDropdownItem>
                     </MDBDropdownMenu>)
                     :
                     (<MDBDropdownMenu className="dropdown-default">
-                    <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true})} to={{ pathname: "/login", state: { modal: true },}}>Login</MDBDropdownItem>
+                    <MDBDropdownItem onClick={()=>this.setState({addLoginModalShow:true,isOpen: false})} to={{ pathname: "/login", state: { modal: true },}}>Login</MDBDropdownItem>
                     <LoginModel  show={this.state.addLoginModalShow} onHide={addLoginModalClose} closeLoginForForgetpswd={this.closeLoginForForgetpswd}/>
                     <ForgetPassword  show={this.state.addForgetPasswordShow} onHide={addForgetPasswordClose}/>
-                    <MDBDropdownItem onClick={()=>this.setState({addSignupModalShow:true})}>Signup Client</MDBDropdownItem>
+                    <MDBDropdownItem onClick={()=>this.setState({addSignupModalShow:true,isOpen: false })}>Signup Client</MDBDropdownItem>
                     <SignupModel show={this.state.addSignupModalShow} onHide={addSignupModalClose}/>
-                    <MDBDropdownItem onClick={()=>this.setState({addSignupBusinessShow:true})}>Signup bussiness</MDBDropdownItem>
+                    <MDBDropdownItem onClick={()=>this.setState({addSignupBusinessShow:true,isOpen:false })}>Signup bussiness</MDBDropdownItem>
                     <SignUpBusiness show={this.state.addSignupBusinessShow} onHide={addSignupBusinessClose}/>
                     </MDBDropdownMenu>)
                    
@@ -111,6 +142,7 @@ render() {
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
+      </header>
       </div>
     );
   }
