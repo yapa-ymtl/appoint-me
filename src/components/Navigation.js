@@ -24,32 +24,10 @@ constructor(props) {
      addLoginModalShow:false,
      addSignupBusinessShow:false,
      addForgetPasswordShow:false,
-     prevScrollpos: window.pageYOffset,
-      visible: true
   }
 
   this.closeLoginForForgetpswd=this.closeLoginForForgetpswd.bind(this)
 }
-
-componentDidMount() {
-  window.addEventListener("scroll", this.handleScroll);
-}
-
-componentWillUnmount() {
-  window.removeEventListener("scroll", this.handleScroll);
-}
-
-handleScroll = () => {
-  const { prevScrollpos } = this.state;
-
-  const currentScrollPos = window.pageYOffset;
-  const visible = prevScrollpos > currentScrollPos;
-
-  this.setState({
-    prevScrollpos: currentScrollPos,
-    visible
-  });
-};
 
 closeLoginForForgetpswd(){
   console.log('change to true');
@@ -92,9 +70,6 @@ render() {
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
           <MDBNavbarNav left>
-            {/* <MDBNavItem>
-              <MDBNavLink to="/mylist">My List</MDBNavLink>
-            </MDBNavItem> */}
             <MDBNavItem>
               <MDBDropdown >
                 <MDBDropdownToggle nav caret color="primary">
