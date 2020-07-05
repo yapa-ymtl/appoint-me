@@ -14,5 +14,7 @@ const config ={
 const app = firebase.initializeApp(config)
 const base = Rebase.createClass(app.database())
 const facebookProvider = new  firebase.auth.FacebookAuthProvider()
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const twitterProvider = new firebase.auth.TwitterAuthProvider();
 
-export {app,base,facebookProvider}
+export {app,base,facebookProvider,googleProvider,twitterProvider}
