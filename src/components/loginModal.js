@@ -6,8 +6,6 @@ import {Redirect} from 'react-router-dom'
 import { app,facebookProvider, googleProvider, twitterProvider } from '../Config/base'
 import firebase from 'firebase'
 
-import { withRouter } from 'react-router-dom';
-
 
 class loginModel extends Component{
   constructor(props) {
