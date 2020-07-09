@@ -47,35 +47,36 @@ class Main extends Component {
         {
             return(
                 <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                    <div class="circle-clipper left">
-                    <div class="circle"></div>
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                            <div class="circle-clipper right">
+                        <div class="circle"></div>
+                        </div>
                     </div>
-                    <div class="gap-patch">
-                    <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                    <div class="circle"></div>
-                    </div>
-                </div>
                 </div>
             )
         }
         return (
-                <Router>
-                    <div>
-                        <Navigation authenticated={this.state.authenticated}/>
-                        <h1 style={{height:70}}> &nbsp</h1>
-                        <Switch>
+            <Router>
+                <div>
+                    <Navigation authenticated={this.state.authenticated}/>
+                    <h1 style={{height:100}}> &nbsp</h1>
+                    <Switch>
                         <Route path="/" exact component={Home}/>
                         <Route path="/about" component={About}/>
                         <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
                         <Route path="rate" component={Rate}/>
-                        </Switch>
-                        <Footer/>
-                    </div>
-                </Router>
+                    </Switch>
+                    
+                    <Footer/>
+                </div>
+            </Router>
         )
     }
 }

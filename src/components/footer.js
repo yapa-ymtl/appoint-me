@@ -5,9 +5,7 @@ function Footer(props) {
   //var href = this.props.history.createHref('https://www.facebook.com', myParams);
     return(
         <footer className="page-footer font-small special-color-dark pt-4 mr-0">
-        
           <div className="container">
-        
             <ul className="text-center">
               <li className="list-inline-item">
                 <MDBBtn size="sm" tag="a"  social="fb" >
@@ -29,7 +27,6 @@ function Footer(props) {
               <a rel="noopener noreferrer" href="https://www.linkedin.com" target="_blank"><MDBIcon fab icon="linkedin-in" /></a>
                 </MDBBtn>
               </li>
-              
             </ul>        
           </div>
           <div className="footer-copyright text-center py-3">© 2020 Copyright:

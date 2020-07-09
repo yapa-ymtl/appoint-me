@@ -45,13 +45,16 @@ class resetPassword extends Component {
       redirect:true
     })
   }
-     render() {
-        if(this.state.redirect===true)
-          {
-            return<Redirect to="/"/>
-          }
-        return (
-          <div
+
+
+  render() {
+    if(this.state.redirect===true)
+    {
+      return<Redirect to="/"/>
+    }
+
+    return (
+      <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -59,57 +62,58 @@ class resetPassword extends Component {
           margin:10,
         }}
       >
-      <MDBCol style={{ maxWidth: "22rem" }}>
-      <MDBCard style={{alignItems:"center"}}>
-        <MDBCardBody>
-          <MDBCardTitle>Reset your password here</MDBCardTitle>
-          <form onSubmit={this.handleSubmit}>
-          <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-          New password
-        </label>
-        <input className="form-control"
-        type="password" 
-        name="password"/* 
-        onBlur={this.form.handleBlurEvent}
-        value={this.state.password} */
-        onChange={this.handleChange}
-        />
-        <label className="error" style={{color:'red',fontSize:12}}>
-          <i>{this.state.password.length <6 && this.state.password.length>0 ? "The password must be at least 6 characters." : ""}</i>
-        </label>
-        <br />
+        <MDBCol style={{ maxWidth: "22rem" }}>
+          <MDBCard style={{alignItems:"center"}}>
+            <MDBCardBody>
+              <MDBCardTitle>
+                Reset your password here
+              </MDBCardTitle>
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
+                New password
+                </label>
+                <input className="form-control"
+                type="password" 
+                name="password"/* 
+                onBlur={this.form.handleBlurEvent}
+                value={this.state.password} */
+                onChange={this.handleChange}
+                />
+                <label className="error" style={{color:'red',fontSize:12}}>
+                  <i>{this.state.password.length <6 && this.state.password.length>0 ? "The password must be at least 6 characters." : ""}</i>
+                </label>
+                <br />
+                <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
+                Confirm password
+                </label>
+                <input className="form-control"
+                type="password" 
+                name="password_confirmation"/* 
+                onBlur={this.form.handleBlurEvent}
+                value={this.state.password_confirmation} */
+                onChange={this.handleChange}
+                />
+                <label className="error" style={{color:'red',fontSize:12}}>
+                  <i>{this.state.password!==this.state.password_confirmation && this.state.password_confirmation.length>0 ?"Passwords not match":""}</i>
+                </label>        
+                <br />
 
-        <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
-          Confirm password
-        </label>
-        <input className="form-control"
-        type="password" 
-        name="password_confirmation"/* 
-        onBlur={this.form.handleBlurEvent}
-        value={this.state.password_confirmation} */
-        onChange={this.handleChange}
-        />
-        <label className="error" style={{color:'red',fontSize:12}}>
-          <i>{this.state.password!==this.state.password_confirmation && this.state.password_confirmation.length>0 ?"Passwords not match":""}</i>
-        </label>        
-        <br />
-        <div className="text-center mt-4">
-        <MDBBtn
-                  gradient="blue"
-                  rounded
-                  className="btn-block z-depth-1a"
-                  type="submit"
-                >
-                  Set new password
-                </MDBBtn>
-        </div>
-      </form>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-          </div>
-        )
-    }
+                <div className="text-center mt-4">
+                  <MDBBtn
+                    gradient="blue"
+                    rounded
+                    className="btn-block z-depth-1a"
+                    type="submit">
+                    Set new password
+                  </MDBBtn>
+                </div>
+              </form>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </div>
+    )
+  }
 }
 
 export default resetPassword
