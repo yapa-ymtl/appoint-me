@@ -23,9 +23,9 @@ render() {
                 </div>
             </div>
         </div>
-        <div style={{margin:15}}>
+        { <div style={{margin:15}}>
             <Slide/>
-        </div>    
+        </div>}   
         </>
         )
     }

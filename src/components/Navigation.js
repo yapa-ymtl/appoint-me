@@ -28,18 +28,23 @@ class NavbarPage extends Component {
     this.closeLoginForForgetpswd=this.closeLoginForForgetpswd.bind(this)
   }
 
- /*  componentWillMount()
+  componentWillMount()
   {
-    var userId = firebase.auth().currentUser.uid;
-    firebase.database().ref('/users/' + userId).once('value').thenf((snapshot)=> {
-    var image_url= (snapshot.val() && snapshot.val().imageURL) || 'Anonymous';
-
-    this.setState({
-      imageUrl:image_url
-    })
-  });
-  console.log("image = "+this.state.imageUrl);
-  } */
+    if(this.props.authenticated)
+    {
+      var userId = firebase.auth().currentUser.uid;
+      console.log(" uid = "+userId);
+      firebase.database().ref('Users/' + userId).once('value').then((snapshot)=> {
+        var image_url= snapshot.val().imageURL;
+      //var image_url= (snapshot.val() && snapshot.val().imageURL) || 'Anonymous';
+        
+      this.setState({
+        imageUrl:image_url
+      })
+      });
+      console.log("image = "+this.state.imageUrl);
+      }
+    }
 
   closeLoginForForgetpswd(){
     this.setState({
@@ -102,7 +107,7 @@ class NavbarPage extends Component {
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
-                    {this.props.authenticated?<MDBIcon icon="user" />:<i class="fas fa-user-slash"></i>}
+                    {this.props.authenticated?<img src={this.state.imageUrl} alt="profile photo" height="25"/>:<i class="fas fa-user-slash"></i>}
                     </MDBDropdownToggle>
                     {
                       this.props.authenticated ? 

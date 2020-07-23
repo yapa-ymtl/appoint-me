@@ -65,7 +65,7 @@ class SignupModel extends Component{
     .then((data)=>{
       if(this.state.creatUser)
       {
-        firebase.database().ref('Users/'+data.user.uid).push().set({
+        firebase.database().ref('Users/'+data.user.uid).set({
           username: this.state.name,
           email: this.state.email,
           type:"client",

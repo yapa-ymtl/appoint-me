@@ -41,7 +41,7 @@ class loginModel extends Component{
         console.log(user[x]+" >>"+x);
       }
        */
-      firebase.database().ref('Users/'+user.uid).push().set({
+      firebase.database().ref('Users/'+user.uid).set({
         username: user.displayName,
         email: user.email,
         imageURL: user.photoURL,
@@ -70,7 +70,7 @@ class loginModel extends Component{
       var user = result.user;
       // ...
       
-      firebase.database().ref('Users/'+user.uid).push().set({
+      firebase.database().ref('Users/'+user.uid).set({
         username: user.displayName,
         email: user.email,
         imageURL: user.photoURL,
@@ -100,7 +100,7 @@ class loginModel extends Component{
       // The signed-in user info.
       var user = result.user;
       // ...
-      firebase.database().ref('Users/'+user.uid).push().set({
+      firebase.database().ref('Users/'+user.uid).set({
         username: user.displayName,
         email: user.email,
         imageURL: user.photoURL,
