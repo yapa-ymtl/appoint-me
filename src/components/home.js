@@ -24,7 +24,7 @@ render() {
             </div>
         </div>
         { <div style={{margin:15}}>
-            <Slide/>
+        <Slide/>
         </div>}   
         </>
         )
