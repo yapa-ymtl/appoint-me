@@ -2,17 +2,97 @@ import React, { Component } from 'react';
 import {MDBBtn,MDBIcon} from "mdbreact";
 import Offers from './offers'
 import Slide from './homePage/slides'
+import Card from './homePage/card'
+import firebase, { database } from 'firebase'
+
 
 
 
 class Home extends Component {
-    
-render() {
-    let styleParagraph={
-        color:'black',
-        fontSize:20,
+
+    constructor()
+    {
+        super();
+
+        this.state={
+            serviceList:[],
+            keyList:null,
+        }   
     }
-    return (
+
+    componentWillMount()
+    {
+        var ref = firebase.database().ref('Users/');
+        var data_array=[];
+        ref.on("value", (data)=> {
+            console.log(data)
+            var data_list= data.val();
+            var keys=Object.keys(data_list);
+            console.log(data_list);
+
+            var j=0;
+            for(var i=0;i<keys.length;i++)
+            {
+                if(data_list[keys[i]].type!="client")
+                { 
+                    data_array[j]=data_list[keys[i]];
+                   j++;                   
+                }
+            } console.log("object")
+            for(var x in data_array)
+        {
+            console.log(data_array[x]);
+        }  
+            this.setState({
+                serviceList:data_array,
+            })  
+        }, function (error) {
+        console.log("Error: " + error.code);
+        });
+        /* var data_array=[];
+
+       function errData(err)
+        {
+            console.log("error = "+err);
+        }
+        
+        var ref= firebase.database().ref('Users/')
+        ref.on('value',data_array=gotData, errData);
+
+        function gotData(data)
+        {
+            var data_list= data.val();
+            var keys=Object.keys(data_list);
+            console.log(data_list);
+
+            var j=0;
+            for(var i=0;i<keys.length;i++)
+            {
+                if(data_list[keys[i]].type!="client")
+                { 
+                    data_array[j]=data_list[keys[i]];
+                   j++;
+                }
+            }       
+        }
+        console.log("aarrayy=> "+data_array[0])  
+        this.setState({
+            serviceList:data_array,
+        })  */
+    }
+
+    
+    render() {
+        //const services=this.state.serviceList.map(service=><Card service={service}/>);
+        for(var x in this.state.serviceList)
+        {
+            console.log(this.state.serviceList[x]);
+        }
+        let styleParagraph={
+            color:'black',
+            fontSize:20,
+        }
+        return (
         <>
         <div className="card card-image"  >
             <div className="jumbotron text-white text-center rgba-stylish-strong py-5 px-4" >
@@ -23,9 +103,11 @@ render() {
                 </div>
             </div>
         </div>
-        { <div style={{margin:15}}>
-        <Slide/>
-        </div>}   
+        <div style={{margin:15}}>
+            <Slide/>
+        </div>   
+        {/* <div> { services} </div>
+        <Card/> */}
         </>
         )
     }

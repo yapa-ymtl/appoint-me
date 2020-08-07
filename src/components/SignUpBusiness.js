@@ -70,7 +70,7 @@ class SignuBusiness extends Component{
     .then((data)=>{
       if(this.state.creatUser)
       {
-        firebase.database().ref('Users/'+data.user.uid).push().set({
+        firebase.database().ref('Users/'+data.user.uid).set({
           username: this.state.name,
           email: this.state.email,
           RegNo:this.state.registration_num,
@@ -103,10 +103,10 @@ class SignuBusiness extends Component{
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div class="container">
+            <div className="container">
               <form  onSubmit={this.handleSubmit}>
-                <div class="row">
-                  <div class="col-sm-12 col-md-8">
+                <div className="row">
+                  <div className="col-sm-12 col-md-8">
                     <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
                     Bussiness name
                     </label>
@@ -121,7 +121,7 @@ class SignuBusiness extends Component{
                       <i>{this.state.errors.name ? this.state.errors.name : ""}</i>
                     </label>
                   </div>
-                  <div class="col-sm-10 col-md-4">
+                  <div className="col-sm-10 col-md-4">
                     <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
                       Registration Number
                     </label>
@@ -136,7 +136,7 @@ class SignuBusiness extends Component{
                       <i>{this.state.errors.registration_num ? this.state.errors.registration_num : ""}</i>
                     </label>
                   </div>
-                  <div class="col-sm-12 col-md-7">
+                  <div className="col-sm-12 col-md-7">
                     <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
                       Bussiness email
                     </label>
@@ -161,7 +161,7 @@ class SignuBusiness extends Component{
                       options={ businessTypes }
                       autoFocus={true} />
                   </div>
-                  <div class="col-sm-12 col-md-6">
+                  <div className="col-sm-12 col-md-6">
                     <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
                       Your password
                     </label>
@@ -177,7 +177,7 @@ class SignuBusiness extends Component{
                     </label>
                   </div>
 
-                  <div class="col-sm-12 col-md-6">
+                  <div className="col-sm-12 col-md-6">
                     <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
                       Confirm password
                     </label>

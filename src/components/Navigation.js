@@ -3,6 +3,7 @@ import { MDBNavbar,MDBTooltip, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavL
 MDBDropdownToggle,MDBBtn, MDBDropdownMenu, MDBView ,MDBDropdownItem, MDBIcon } from "mdbreact";
 import { Router,Link } from 'react-router-dom';
 import firebase from 'firebase'
+import Image from 'react-bootstrap/Image'
 
 import SignupModel from './signupModel'
 import LoginModel from './loginModal'
@@ -24,6 +25,7 @@ class NavbarPage extends Component {
       addSignupBusinessShow:false,
       addForgetPasswordShow:false,
       imageUrl:null,
+      userName:"user",
     }
     this.closeLoginForForgetpswd=this.closeLoginForForgetpswd.bind(this)
   }
@@ -33,18 +35,19 @@ class NavbarPage extends Component {
     if(this.props.authenticated)
     {
       var userId = firebase.auth().currentUser.uid;
-      console.log(" uid = "+userId);
       firebase.database().ref('Users/' + userId).once('value').then((snapshot)=> {
         var image_url= snapshot.val().imageURL;
+        var user_name=snapshot.val().username;
+        
       //var image_url= (snapshot.val() && snapshot.val().imageURL) || 'Anonymous';
         
-      this.setState({
-        imageUrl:image_url
-      })
+        this.setState({
+          imageUrl:image_url,
+          userName:user_name,
+        })
       });
-      console.log("image = "+this.state.imageUrl);
-      }
     }
+  }
 
   closeLoginForForgetpswd(){
     this.setState({
@@ -107,7 +110,7 @@ class NavbarPage extends Component {
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
-                    {this.props.authenticated?<img src={this.state.imageUrl} alt="profile photo" height="25"/>:<i class="fas fa-user-slash"></i>}
+                        {this.props.authenticated?<Image src={this.state.imageUrl} alt="profile pic" style={{height:30}} roundedCircle/>:<i class="fas fa-user-slash"></i>}
                     </MDBDropdownToggle>
                     {
                       this.props.authenticated ? 
