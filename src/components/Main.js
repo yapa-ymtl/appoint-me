@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import ResetPassword from './resetPassword'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import {app,base} from '../Config/base'
+import { Container,Badge ,Spinner, Row, Col } from 'reactstrap';
 
 import Navigation from './Navigation'
 import Footer from './footer'
 import About from './About'
 import Mylist from './Mylist'
-import Home from './home'
+//import Home from './home'
 import Rate from './rateUs'
+import Profile from './profile'
+import Loadable from 'react-loadable'
 
 
 class Main extends Component {
@@ -19,7 +22,11 @@ class Main extends Component {
             authenticated:false,
             loading:true,
         }
+        document.title ="AppointMe | Home";
     }
+
+
+    
 
     componentWillMount()
     {
@@ -43,21 +50,28 @@ class Main extends Component {
    
 
     render() {
+        const HomeView = Loadable({
+            loader: () => import('./home'),
+            loading: (props)=> {
+                if (props.pastDelay) {
+                  return <div style={{ height: "100vh", backgroundColor: "#423e3d" }}  >...</div>;
+                } else {
+                  return null;
+                }
+            },
+            delay: 300
+        })
+
         if(this.state.loading===true)
         {
             return(
-                <div class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                            <div class="circle-clipper right">
-                        <div class="circle"></div>
-                        </div>
-                    </div>
+                <div
+                    style={{
+                        position: 'absolute', left: '50%', top: '50%',
+                        transform: 'translate(-50%, -50%)'
+                    }}
+                    >
+                    <Spinner type="grow" color="primary" style={{height:50,width:50,}} />
                 </div>
             )
         }
@@ -67,11 +81,12 @@ class Main extends Component {
                     <Navigation authenticated={this.state.authenticated}/>
                     <h1 style={{height:100}}> &nbsp</h1>
                     <Switch>
-                        <Route path="/" exact component={Home}/>
+                        <Route path="/" exact component={HomeView}/>
                         <Route path="/about" component={About}/>
                         <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
-                        <Route path="rate" component={Rate}/>
+                        <Route path="/rate" component={Rate}/>
+                        <Route path="/profile" component={Profile}/>
                     </Switch>
                     
                     <Footer/>

@@ -5,6 +5,7 @@ import { Router,Link } from 'react-router-dom';
 import firebase from 'firebase'
 import Image from 'react-bootstrap/Image'
 
+
 import SignupModel from './signupModel'
 import LoginModel from './loginModal'
 import SignUpBusiness from './SignUpBusiness'
@@ -110,12 +111,12 @@ class NavbarPage extends Component {
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
-                        {this.props.authenticated?<Image src={this.state.imageUrl} alt="profile pic" style={{height:30}} roundedCircle/>:<i class="fas fa-user-slash"></i>}
+                        {this.props.authenticated ?<Image src={this.state.imageUrl} alt="profile pic" style={{height:30}} roundedCircle/>:<i class="fas fa-user-slash"></i>}
                     </MDBDropdownToggle>
                     {
                       this.props.authenticated ? 
                       ( <MDBDropdownMenu className="dropdown-default">
-                        <MDBDropdownItem><i class="far fa-user"></i> Profile</MDBDropdownItem><link></link>
+                        <MDBDropdownItem><Link to="/profile"><i class="far fa-user"></i> Profile</Link></MDBDropdownItem>
                       <MDBDropdownItem onClick={this.handleLogout}><MDBIcon icon="sign-out-alt"/> Log out</MDBDropdownItem>
                       </MDBDropdownMenu>)
                       :

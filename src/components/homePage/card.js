@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Image, Card ,Button} from 'react-bootstrap';
+import {MDBBtn} from "mdbreact";
 
 class card extends Component {
 
@@ -12,31 +13,34 @@ class card extends Component {
         }
     }
 
-    componentDidMount()
-    {
-        console.log("***********");
-    }
-
     render() {
-        return (
-            <div class="container">
-                <Card >
-        <Card.Header>{this.props.service.username}</Card.Header>
-                    <div className="row">
-                    <Card.Body>
-                        <Card.Title>Special title treatment</Card.Title>
-                        <Card.Text>
-                        <div className="row" >
-                            <div className="col-sm-12 col-md-3"><Image variant="top" src="https://memandsahheb.com/wp-content/uploads/2019/12/cute-girls-images-2.jpeg" alt="profile photo" style={{height:160}} thumbnail/></div>
-                            <div className="col-sm-12 col-md-9">With supporting text below as a natural lead-in to additional content.</div>
+        if(typeof this.props.service !== 'undefined')
+       {
+            return (
+                <div class="container" style={{marginBottom:10}}>
+                    <Card >
+                        <Card.Header>{this.props.service.username}</Card.Header>
+                        <div className="row">
+                        <Card.Body>
+                            <Card.Title>{this.props.service.type}</Card.Title>
+                            <Card.Text>
+                            <div className="row" >
+                                <div className="col-sm-12 col-md-3"><Image variant="top" src={this.props.service.imageURL} alt="profile photo" style={{height:160}} thumbnail/></div>
+                                <div className="col-sm-12 col-md-9">With supporting text below as a natural lead-in to additional content.</div>
+                            </div>
+                            </Card.Text>
+                            <MDBBtn  style={{color:"white"}} >Make appointment</MDBBtn >
+                        </Card.Body>
                         </div>
-                        </Card.Text>
-                        <Button variant="primary">Make appointment</Button>
-                    </Card.Body>
-                    </div>
-                </Card>
-            </div>
-        )
+                    </Card>
+                </div>
+            )
+       }
+       else
+       {
+           return<></>
+       }
+    
     }
 }
 
