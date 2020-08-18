@@ -28,7 +28,6 @@ class Home extends Component {
         ref.on("value", (data)=> {
             var data_list= data.val();
             var keys=Object.keys(data_list);
-            console.log(data_list);
 
             var j=0;
             for(var i=0;i<keys.length;i++)

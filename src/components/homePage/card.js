@@ -25,7 +25,7 @@ class card extends Component {
                             <Card.Title>{this.props.service.type}</Card.Title>
                             <Card.Text>
                             <div className="row" >
-                                <div className="col-sm-12 col-md-3"><Image variant="top" src={this.props.service.imageURL} alt="profile photo" style={{height:160}} thumbnail/></div>
+                                <div className="col-sm-12 col-md-3"><Image variant="top" src={this.props.service.imageURL} alt="profile photo" style={{height:140,width:140}} thumbnail/></div>
                                 <div className="col-sm-12 col-md-9">With supporting text below as a natural lead-in to additional content.</div>
                             </div>
                             </Card.Text>

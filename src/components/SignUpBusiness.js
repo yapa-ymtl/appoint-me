@@ -76,7 +76,7 @@ class SignuBusiness extends Component{
           RegNo:this.state.registration_num,
           businessTypes:this.state.business_type,
           type:this.state.business_type,
-          imageURL:"",
+          imageURL:"https://firebasestorage.googleapis.com/v0/b/appointme-17cfe.appspot.com/o/profilePic%2Fgroup%20dp.png?alt=media&token=52b8eef0-465a-46c5-b2ce-a2b4367bac24",
         }); 
       }
       this.setState({
@@ -189,7 +189,7 @@ class SignuBusiness extends Component{
                     value={this.state.password_confirmation}
                     />
                     <label className="error" style={{color:'red',fontSize:12}}>
-                      <i>{this.state.errors.password_confirmation ? console.log(this.state.password) : ""}</i>
+                      <i>{this.state.password!==this.state.password_confirmation ?"Passwords not match":""}</i>
                     </label>        
                   </div>
                   <div className="text-center mt-4">

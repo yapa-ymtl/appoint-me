@@ -86,7 +86,7 @@ class Main extends Component {
                         <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
                         <Route path="/rate" component={Rate}/>
-                        <Route path="/profile" component={Profile}/>
+                        <Route path="/profile" component={(props)=>(<Profile {...props} authenticated={this.state.authenticated}/>)}/>
                     </Switch>
                     
                     <Footer/>

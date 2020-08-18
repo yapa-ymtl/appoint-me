@@ -70,6 +70,7 @@ class NavbarPage extends Component {
     this.setState({
       isOpen: !this.state.isOpen 
     })
+    window.location.reload();
   }
 
   render() {
@@ -111,7 +112,7 @@ class NavbarPage extends Component {
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
-                        {this.props.authenticated ?<Image src={this.state.imageUrl} alt="profile pic" style={{height:30}} roundedCircle/>:<i class="fas fa-user-slash"></i>}
+                        {this.props.authenticated ?(this.state.imageUrl==""?<i class="fas fa-user-slash"></i>:<Image src={this.state.imageUrl} alt="profile pic" style={{height:30,width:30}} roundedCircle/>):<i class="fas fa-user-slash"></i>}
                     </MDBDropdownToggle>
                     {
                       this.props.authenticated ? 

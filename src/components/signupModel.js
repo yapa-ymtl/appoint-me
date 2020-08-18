@@ -69,7 +69,7 @@ class SignupModel extends Component{
           username: this.state.name,
           email: this.state.email,
           type:"client",
-          imageURL:"",
+          imageURL:"https://firebasestorage.googleapis.com/v0/b/appointme-17cfe.appspot.com/o/profilePic%2Fman.png?alt=media&token=d0f73041-271c-4031-94fa-f023395d6670",
         }); 
       }
       this.setState({
