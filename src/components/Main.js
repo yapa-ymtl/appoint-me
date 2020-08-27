@@ -8,6 +8,7 @@ import Navigation from './Navigation'
 import Footer from './footer'
 import About from './About'
 import Mylist from './Mylist'
+import Appointment from './appnmntModal'
 //import Home from './home'
 import Rate from './rateUs'
 import Profile from './profile'
@@ -86,6 +87,7 @@ class Main extends Component {
                         <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
                         <Route path="/rate" component={Rate}/>
+                        <Route path="/appointment/:id" component={Appointment}/>
                         <Route path="/profile" component={(props)=>(<Profile {...props} authenticated={this.state.authenticated}/>)}/>
                     </Switch>
                     

@@ -121,6 +121,12 @@ class loginModel extends Component{
   handleSubmit=(e)=>{
     e.preventDefault();
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(()=>{
+      this.setState({
+        redirect:true,
+      })
+      console.log("jllaj");
+    })
     .catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
@@ -131,7 +137,8 @@ class loginModel extends Component{
     alert(errorMessage);
     }
     console.log(error);
-    });
+    }
+    );
   }
 
   handleChange=(e)=>{

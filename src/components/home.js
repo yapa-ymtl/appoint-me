@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {MDBBtn,MDBIcon} from "mdbreact";
-import Offers from './offers'
 import Slide from './homePage/slides'
 import Card from './homePage/card'
 import firebase, { database } from 'firebase'
-import Profile from './profile'
 
 
 
@@ -18,6 +16,7 @@ class Home extends Component {
         this.state={
             serviceList:[],
             keyList:null,
+            businessId:null,
         }   
     }
 
@@ -35,6 +34,7 @@ class Home extends Component {
                 if(data_list[keys[i]].type!="client")
                 { 
                     data_array[j]=data_list[keys[i]];
+                    data_array[j].key=keys[i];
                    j++;                   
                 }
             }  
@@ -46,11 +46,16 @@ class Home extends Component {
         });
     }
 
+    callChild=(para)=>{
+        this.setState({businessId:this.para,});
+        console.log(para);
+    }
+
     
     render() {
-        const services=this.state.serviceList.map(service=><Card service={service}/>);
+        const services=this.state.serviceList.map(service=><Card service={service}  returnId={this.callChild}/>);
         
-
+        console.log(">>"+this.state.businessId);
        /*  for(var x in services)
         {
             console.log("X>>"+x+" "+ services[x].email);
@@ -70,9 +75,9 @@ class Home extends Component {
                 </div>
             </div>
         </div>
-        <div style={{margin:15}}>
+        {/* <div style={{margin:15}}>
             <Slide/>
-        </div>   
+        </div> */}  
         <div> { services} </div>
         <Card/>
         </>
