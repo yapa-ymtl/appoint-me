@@ -125,7 +125,6 @@ class loginModel extends Component{
       this.setState({
         redirect:true,
       })
-      console.log("jllaj");
     })
     .catch(function(error) {
     // Handle Errors here.

@@ -46,16 +46,10 @@ class Home extends Component {
         });
     }
 
-    callChild=(para)=>{
-        this.setState({businessId:this.para,});
-        console.log(para);
-    }
-
     
     render() {
-        const services=this.state.serviceList.map(service=><Card service={service}  returnId={this.callChild}/>);
+        const services=this.state.serviceList.map(service=><Card service={service}/>);
         
-        console.log(">>"+this.state.businessId);
        /*  for(var x in services)
         {
             console.log("X>>"+x+" "+ services[x].email);

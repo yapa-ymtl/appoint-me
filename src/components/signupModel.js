@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import {Modal} from 'react-bootstrap'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn ,MDBIcon} from 'mdbreact';
 import ReactFormInputValidation from "react-form-input-validation";
-import { withRouter } from 'react-router';
-//import { app } from '../Config/base'
 import firebase from 'firebase'
 
 

@@ -31,7 +31,6 @@ class card extends Component {
        {
            const newTo={
                pathname:"/appointment/"+this.props.service.key,
-               param1:this.props.service.key,
            };
             return (
                 
@@ -54,7 +53,7 @@ class card extends Component {
                             <div className="row" >
                                 <div>
                                     <Link to={newTo}>
-                                        <MDBBtn  style={{color:"white"}} onClick={()=>this.props.returnId(this.props.service.key)} >Make appointment</MDBBtn >
+                                        <MDBBtn rounded style={{color:"white"}} >Make appointment</MDBBtn >
                                     </Link>
                                 </div>
                                 <div id="showTooltip" className="col-xs-6 col-sm-4 col-md-2" onClick={this.copyPhone}><MDBIcon icon="phone-alt" /> {this.props.service.phoneNumber}</div>

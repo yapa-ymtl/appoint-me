@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ResetPassword from './resetPassword'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
-import {app,base} from '../Config/base'
-import { Container,Badge ,Spinner, Row, Col } from 'reactstrap';
+import {app} from '../Config/base'
+import { Spinner, } from 'reactstrap';
 
 import Navigation from './Navigation'
 import Footer from './footer'
