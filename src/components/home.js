@@ -19,6 +19,8 @@ class Home extends Component {
             businessId:null,
             userType:null,
             loading:true,
+            noAppointment:false,
+            noBusiness:false,
         }   
     }
 
@@ -27,21 +29,28 @@ class Home extends Component {
         if(this.props.authenticated==="business"){
             var today=new Date();
             var userId = firebase.auth().currentUser.uid;
-            var ref = firebase.database().ref('Appointments/'+userId+'/'+today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate());
+            var ref = firebase.database().ref('Appointments/'+userId+'/'+today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate())
             var data_array=[];
             ref.on("value",(data)=>{
                 var data_list= data.val();
-                var keys=Object.keys(data_list);
-                
-                for(var i=0;i<keys.length;i++)
-                { 
-                    data_array[i]=data_list[keys[i]];
-                    data_array[i].key=keys[i];
-                } 
-                this.setState({
-                    serviceList:data_array,
-                    loading:false,
-                })   
+                if(data_list)
+                {
+                    var keys=Object.keys(data_list);
+                    for(var i=0;i<keys.length;i++)
+                    { 
+                        data_array[i]=data_list[keys[i]];
+                        data_array[i].key=keys[i];
+                    } 
+                    this.setState({
+                        serviceList:data_array,
+                        loading:false,
+                    })   
+                }
+                else{
+                    this.setState({
+                        noAppointment:true,
+                    })
+                }
             })
         }
         else
@@ -50,22 +59,31 @@ class Home extends Component {
             var data_array=[];
             ref.on("value", (data)=> {
                 var data_list= data.val();
-                var keys=Object.keys(data_list);
+                if(data_list)
+                {
+                    var keys=Object.keys(data_list);
 
-                var j=0;
-                for(var i=0;i<keys.length;i++)
-                { 
-                    if(data_list[keys[i]].type!="client")
+                    var j=0;
+                    for(var i=0;i<keys.length;i++)
                     { 
-                        data_array[j]=data_list[keys[i]];
-                        data_array[j].key=keys[i];
-                    j++;                   
-                    }
-                }  
-                this.setState({
-                    serviceList:data_array,
-                    loading:false,
-                })  
+                        if(data_list[keys[i]].type!="client")
+                        { 
+                            data_array[j]=data_list[keys[i]];
+                            data_array[j].key=keys[i];
+                        j++;                   
+                        }
+                    }  
+                    this.setState({
+                        serviceList:data_array,
+                        loading:false,
+                    })  
+                }
+                else
+                {
+                    this.setState({
+                        noBusiness:true,
+                    })
+                }
             }, function (error) {
             console.log("Error: " + error.code);
             });
@@ -101,9 +119,11 @@ class Home extends Component {
             {
                 this.props.authenticated==="business"?
                 (
+                    this.state.noAppointment?<div >No appointments today </div>:
                     <div>{apponointments}</div>  
                 ):
                 (
+                    this.state.noBusiness?<div>No registered businesses</div>:
                     <div>{services}</div>
                 )
             }

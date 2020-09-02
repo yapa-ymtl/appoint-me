@@ -27,7 +27,7 @@ class Appointment extends Component {
       formattedValue:null,
       title:null,
       description:'',
-      businessId:this.props.match.params.appId, 
+      businessId:this.props.match.params.id, 
       workingDays:null,
     }
 
@@ -48,7 +48,6 @@ class Appointment extends Component {
         workingDays:snapshot.val().workingDays,
       })
     });
-
   }
  */
   handleChange=(e)=>{
@@ -89,7 +88,7 @@ class Appointment extends Component {
       {label:'Take a number',value:"Take a number"},
       {label:"Select fixed time",value:"Select fixed time"},
     ];
-
+    console.log(this.state.businessId);
 
     if(this.props.authenticated)
     {
