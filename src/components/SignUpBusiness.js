@@ -79,8 +79,11 @@ class SignuBusiness extends Component{
           type:this.state.business_type,
           imageURL:"https://firebasestorage.googleapis.com/v0/b/appointme-17cfe.appspot.com/o/profilePic%2Fgroup%20dp.png?alt=media&token=52b8eef0-465a-46c5-b2ce-a2b4367bac24",
           workingDays:this.state.workingDays,
+          startTime:"06:00",
+          finishTime:"18:00",
         }); 
       }
+      alert("Please set up your profile first.")
       this.setState({
         creatUser:true,
       })

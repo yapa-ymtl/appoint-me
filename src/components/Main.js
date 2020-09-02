@@ -3,16 +3,17 @@ import ResetPassword from './resetPassword'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import {app} from '../Config/base'
 import { Spinner, } from 'reactstrap';
+import firebase from 'firebase'
 
 import Navigation from './Navigation'
 import Footer from './footer'
 import About from './About'
 import Mylist from './Mylist'
 import Appointment from './appnmntModal'
-//import Home from './home'
 import Rate from './rateUs'
 import Profile from './profile'
 import Loadable from 'react-loadable'
+import Home from './home';
 
 
 class Main extends Component {
@@ -22,6 +23,7 @@ class Main extends Component {
         this.state={
             authenticated:false,
             loading:true,
+            userType:null,
         }
         document.title ="AppointMe | Home";
     }
@@ -33,15 +35,16 @@ class Main extends Component {
     {
         this.removeAuthListener = app.auth().onAuthStateChanged((user) => {
             if (user) {
-              this.setState({
-                authenticated: true,
-                //currentUser: user,
-                loading: false,
-              })
+                firebase.database().ref('Users/' + user.uid).once('value').then((snapshot)=> {
+                    this.setState({
+                        userType:snapshot.val().type,
+                        loading:false,
+                        authenticated: true,
+                    }) 
+                })
             } else {
               this.setState({
                 authenticated: false,
-                //currentUser: null,
                 loading: false,
               }) 
             }
@@ -51,18 +54,6 @@ class Main extends Component {
    
 
     render() {
-        const HomeView = Loadable({
-            loader: () => import('./home'),
-            loading: (props)=> {
-                if (props.pastDelay) {
-                  return <div style={{ height: "100vh", backgroundColor: "#423e3d" }}  >...</div>;
-                } else {
-                  return null;
-                }
-            },
-            delay: 300
-        })
-
         if(this.state.loading===true)
         {
             return(
@@ -72,22 +63,23 @@ class Main extends Component {
                         transform: 'translate(-50%, -50%)'
                     }}
                     >
-                    <Spinner type="grow" color="primary" style={{height:50,width:50,}} />
+                    <Spinner type="grow" color="primary" size="lg" />
                 </div>
             )
         }
         return (
+            
             <Router>
                 <div>
-                    <Navigation authenticated={this.state.authenticated}/>
+                    <Navigation authenticated={this.state.userType}/>
                     <h1 style={{height:100}}> &nbsp</h1>
                     <Switch>
-                        <Route path="/" exact component={HomeView}/>
+                        <Route path="/" exact component={(props)=>(<Home {...props} authenticated={this.state.userType}/>)}/>
                         <Route path="/about" component={About}/>
                         <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
                         <Route path="/rate" component={Rate}/>
-                        <Route path="/appointment/:id" component={Appointment}/>
+                        <Route path="/appointment/:id" component={(props)=>(<Appointment {...props} authenticated={this.state.authenticated}/>)}/>
                         <Route path="/profile" component={(props)=>(<Profile {...props} authenticated={this.state.authenticated}/>)}/>
                     </Switch>
                     

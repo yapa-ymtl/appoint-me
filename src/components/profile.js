@@ -19,7 +19,7 @@ class profile extends Component {
       loading:true,
       imageFile:null,
       progres:null,
-      description:"",
+      description:"No description.",
       phoneNumber:null,
       workingDays:{Sunday:false,Monday:true,Tuesday:true,Wednesday:true,Thursday:true,Friday:true,Saturday:false},
       startTime:null,
@@ -183,6 +183,7 @@ class profile extends Component {
       {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('Users/'+userId).update({
+          description:this.state.description,
           username:this.state.userName,
           imageURL:this.state.image,
           workingDays:this.state.workingDays,
@@ -299,7 +300,7 @@ class profile extends Component {
         <div style={{
             position: 'absolute', left: '50%', top: '50%',
             transform: 'translate(-50%, -50%)'}}>
-          <Spinner type="grow" color="primary" style={{height:50,width:50,}} />
+          <Spinner type="grow" color="primary" size="lg" />
         </div>
       )
     }

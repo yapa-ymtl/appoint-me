@@ -4,6 +4,7 @@ MDBDropdownToggle,MDBBtn, MDBDropdownMenu, MDBView ,MDBDropdownItem, MDBIcon } f
 import { Router,Link } from 'react-router-dom';
 import firebase from 'firebase'
 import Image from 'react-bootstrap/Image'
+import {app} from '../Config/base'
 
 
 import SignupModel from './signupModel'
@@ -66,7 +67,7 @@ class NavbarPage extends Component {
   }
 
   handleLogout=()=>{
-    firebase.auth().signOut( )
+    firebase.auth().signOut( );
     this.setState({
       isOpen: !this.state.isOpen 
     })

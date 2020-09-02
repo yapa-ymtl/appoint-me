@@ -33,9 +33,8 @@ class card extends Component {
                pathname:"/appointment/"+this.props.service.key,
            };
             return (
-                
                 <div class="container" style={{marginTop:13}}>
-                    <Card >
+                    <Card>
                         <Card.Header>{this.props.service.username}</Card.Header>
                         <div>{this.props.returnId}</div>
                         <div className="row">
@@ -56,8 +55,8 @@ class card extends Component {
                                         <MDBBtn rounded style={{color:"white"}} >Make appointment</MDBBtn >
                                     </Link>
                                 </div>
-                                <div id="showTooltip" className="col-xs-6 col-sm-4 col-md-2" onClick={this.copyPhone}><MDBIcon icon="phone-alt" /> {this.props.service.phoneNumber}</div>
-                                <div id="showTooltip" className="col-xs-6 col-sm-4 col-md-4" onClick={this.copyEmail}><MDBIcon icon="envelope" /> {this.props.service.email}</div>
+                                <div id="showTooltip" className="col-sm-6 col-md-3" onClick={this.copyPhone}><MDBIcon icon="phone-alt" /> {this.props.service.phoneNumber}</div>
+                                <div id="showTooltip" className="col-sm-6 col-md-5" onClick={this.copyEmail}><MDBIcon icon="envelope" /> {this.props.service.email}</div>
                                 <UncontrolledTooltip placement="top" target="showTooltip">
                                     Click to copy
                                 </UncontrolledTooltip>
