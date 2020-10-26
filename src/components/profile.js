@@ -66,45 +66,52 @@ class profile extends Component {
     e.preventDefault();
     if(this.state.imageFile)
     {
-      var storageRef = firebase.storage().ref();
-      var uploadTask = storageRef.child('profilePic/'+this.state.imageFile.name).put(this.state.imageFile);
+      if (!this.state.imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        alert("Please Select valid input file!!!");
+        window.location.reload();
+      }
+      else
+      {
+        var storageRef = firebase.storage().ref();
+        var uploadTask = storageRef.child('profilePic/'+this.state.imageFile.name).put(this.state.imageFile);
 
-      uploadTask.on('state_changed', (snapshot)=>{
-        
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.setState({
-            progres:progress,
-        })
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function(error) {
-        // Handle unsuccessful uploads
-      }, ()=> {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL)=> {
-            if(this.state.userName!="")
-            {
-              var userId = firebase.auth().currentUser.uid;
-              firebase.database().ref('Users/'+userId).update({
-                imageURL:downloadURL,
-                username:this.state.userName,
-              });
-            }
-            else
-            {
-              var userId = firebase.auth().currentUser.uid;
-              firebase.database().ref('Users/'+userId).update({
-                imageURL:this.state.image,
-              });
-            }
-            window.location.reload();
+        uploadTask.on('state_changed', (snapshot)=>{
+          
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.setState({
+              progres:progress,
+          })
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function(error) {
+          // Handle unsuccessful uploads
+        }, ()=> {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL)=> {
+              if(this.state.userName!="")
+              {
+                var userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('Users/'+userId).update({
+                  imageURL:downloadURL,
+                  username:this.state.userName,
+                });
+              }
+              else
+              {
+                var userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('Users/'+userId).update({
+                  imageURL:this.state.image,
+                });
+              }
+              window.location.reload();
+          });
         });
-      });
+      }
       
     }
     else{
@@ -126,57 +133,64 @@ class profile extends Component {
 
     if(this.state.imageFile)
     {
-      var storageRef = firebase.storage().ref();
-      var uploadTask = storageRef.child('profilePic/'+this.state.imageFile.name).put(this.state.imageFile);
+      if (!this.state.imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        alert("Please Select valid input file!!!");
+        window.location.reload();
+      }
+      else
+      {
+        var storageRef = firebase.storage().ref();
+        var uploadTask = storageRef.child('profilePic/'+this.state.imageFile.name).put(this.state.imageFile);
 
-      uploadTask.on('state_changed', (snapshot)=>{
-        
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.setState({
-            progres:progress,
-        })
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function(error) {
-        // Handle unsuccessful uploads
-      }, ()=> {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL)=> {
-            if(this.state.userName!="")
-            {
-              var userId = firebase.auth().currentUser.uid;
-              firebase.database().ref('Users/'+userId).update({
-                imageURL:downloadURL,
-                username:this.state.userName,
-                description:this.state.description,
-                phoneNumber:this.state.phoneNumber,
-                workingDays:this.state.workingDays,
-                startTime:this.state.startTime,
-                finishTime:this.state.finishTime,
+        uploadTask.on('state_changed', (snapshot)=>{
+          
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.setState({
+              progres:progress,
+          })
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function(error) {
+          // Handle unsuccessful uploads
+        }, ()=> {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL)=> {
+              if(this.state.userName!="")
+              {
+                var userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('Users/'+userId).update({
+                  imageURL:downloadURL,
+                  username:this.state.userName,
+                  description:this.state.description,
+                  phoneNumber:this.state.phoneNumber,
+                  workingDays:this.state.workingDays,
+                  startTime:this.state.startTime,
+                  finishTime:this.state.finishTime,
 
-              });
-            }
-            else
-            {
-              var userId = firebase.auth().currentUser.uid;
-              firebase.database().ref('Users/'+userId).update({
-                imageURL:this.state.image,
-                description:this.state.description,
-                workingDays:this.state.workingDays,
-                phoneNumber:this.state.phoneNumber,
-                startTime:this.state.startTime,
-                finishTime:this.state.finishTime,
-              });
-            }
-            window.location.reload();
+                });
+              }
+              else
+              {
+                var userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('Users/'+userId).update({
+                  imageURL:this.state.image,
+                  description:this.state.description,
+                  workingDays:this.state.workingDays,
+                  phoneNumber:this.state.phoneNumber,
+                  startTime:this.state.startTime,
+                  finishTime:this.state.finishTime,
+                });
+              }
+              window.location.reload();
+          });
         });
-      });
-      
+        
+      }
     }
     else{
       if(this.state.userName!="")

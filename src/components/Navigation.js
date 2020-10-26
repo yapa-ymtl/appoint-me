@@ -97,7 +97,7 @@ class NavbarPage extends Component {
                       My List
                     </MDBDropdownToggle>
                     <MDBDropdownMenu basic className="dropdown-default">
-                    <MDBNavItem><MDBDropdownItem href="#!" >Today List</MDBDropdownItem></MDBNavItem>
+                    <MDBNavItem><MDBDropdownItem href="/today_list" >Today List</MDBDropdownItem></MDBNavItem>
                     <MDBNavItem><MDBDropdownItem href="#!">Past List</MDBDropdownItem></MDBNavItem>
                     <MDBNavItem><MDBDropdownItem href="#!">Future List</MDBDropdownItem></MDBNavItem></MDBDropdownMenu>
                   </MDBDropdown>

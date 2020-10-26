@@ -14,6 +14,7 @@ import Rate from './rateUs'
 import Profile from './profile'
 import Loadable from 'react-loadable'
 import Home from './home';
+import TodayList from './todayList'
 
 
 class Main extends Component {
@@ -81,6 +82,7 @@ class Main extends Component {
                         <Route path="/rate" component={Rate}/>
                         <Route path="/appointment/:id" component={(props)=>(<Appointment {...props} authenticated={this.state.authenticated}/>)}/>
                         <Route path="/profile" component={(props)=>(<Profile {...props} authenticated={this.state.authenticated}/>)}/>
+                        <Route path="/today_list" component={(props)=>(<TodayList {...props} authenticated={this.state.userType}/>)}/>
                     </Switch>
                     
                     <Footer/>

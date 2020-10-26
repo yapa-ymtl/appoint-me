@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Card, CardImg, CardTitle, CardText, CardColumns,CardSubtitle, CardBody} from 'reactstrap';
 import { MDBBtn } from "mdbreact";
 
-export default class appointmentCard extends Component {
+export default class todayListCard extends Component {
     render() {
         if(typeof this.props.service !== 'undefined')
         {

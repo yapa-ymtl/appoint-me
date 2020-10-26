@@ -135,6 +135,7 @@ class Appointment extends Component {
                       <div className="col-sm-5">
                       <DatePickerComponent
                         id="date" placeholder="Pick your date"
+                        showRoundedCorner={true} showWeekend={true}
                         min={this.state.minDate} max={this.state.maxDate}
                         value={this.state.date} onChange={this.handleChange}
                       />
