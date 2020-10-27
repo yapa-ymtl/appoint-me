@@ -28,7 +28,7 @@ class Appointment extends Component {
       title:null,
       description:'',
       businessId:this.props.match.params.id, 
-      workingDays:null,
+      workingDays:{Sunday:true,Monday:true,Tuesday:true,Wednesday:true,Thursday:true,Friday:true,Saturday:false},
     }
 
     this.data = [{
@@ -42,14 +42,14 @@ class Appointment extends Component {
   }];
   };
 
-  /* componentWillMount(){
+  componentWillMount(){
     firebase.database().ref('Users/' + this.state.businessId).once('value').then((snapshot)=> {
       this.setState({
         workingDays:snapshot.val().workingDays,
       })
     });
   }
- */
+
   handleChange=(e)=>{
     this.setState({
       [e.target.id]:e.target.value
@@ -83,12 +83,25 @@ class Appointment extends Component {
     }); 
   }
 
+  disable=(args)=> { 
+    if ((args.date.getDay() == 0 && !this.state.workingDays.Sunday) || 
+        (args.date.getDay() == 1 && !this.state.workingDays.Monday) ||
+        (args.date.getDay() == 2 && !this.state.workingDays.Tuesday) ||
+        (args.date.getDay() == 3 && !this.state.workingDays.Wednesday) ||
+        (args.date.getDay() == 4 && !this.state.workingDays.Thursday) ||
+        (args.date.getDay() == 5 && !this.state.workingDays.Friday) ||
+        (args.date.getDay() == 6 && !this.state.workingDays.Saturday) ) 
+    { 
+      args.element.classList.add("e-disabled"); 
+    } 
+  } 
+
   render(){
+    console.log(this.state.workingDays.Sunday);
     const businessTypes = [
       {label:'Take a number',value:"Take a number"},
       {label:"Select fixed time",value:"Select fixed time"},
     ];
-    console.log(this.state.businessId);
 
     if(this.props.authenticated)
     {
@@ -136,6 +149,7 @@ class Appointment extends Component {
                       <DatePickerComponent
                         id="date" placeholder="Pick your date"
                         showRoundedCorner={true} showWeekend={true}
+                        renderDayCell={this.disable} 
                         min={this.state.minDate} max={this.state.maxDate}
                         value={this.state.date} onChange={this.handleChange}
                       />

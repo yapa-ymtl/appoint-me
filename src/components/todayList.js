@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Card from './todaListCard'
 import firebase from 'firebase'
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
+import {Container, Row, Col } from 'reactstrap';
 
 class todayList extends Component {
     constructor()
@@ -16,13 +18,14 @@ class todayList extends Component {
             noAppointment:false,
             noBusiness:false,
             crntState:null,
+            date:new Date(),
         }
     }
 
     componentWillMount()
     {
         if(this.props.authenticated){
-            var today=new Date();
+            var today=this.state.date;
             var userId = firebase.auth().currentUser.uid;
             var ref = firebase.database().ref('Appointments/'+userId+'/'+today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate())
             var data_array=[];
@@ -50,6 +53,13 @@ class todayList extends Component {
         }
     }
 
+    handleChange=(e)=>{
+        this.setState({
+          [e.target.id]:e.target.value
+        })
+        this.componentWillMount();
+    }
+
 
     render() {
         
@@ -57,6 +67,18 @@ class todayList extends Component {
 
         return (
             <div>
+                <Container>
+                    <Row>
+                        <Col sm="6" xs="12">
+                            <DatePickerComponent
+                            id="date" placeholder="Pick your date"
+                            showRoundedCorner={true} showWeekend={true}
+                            max={this.state.maxDate}
+                            value={this.state.date} onChange={this.handleChange}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
                 {list}
             </div>
         )
