@@ -92,15 +92,7 @@ class NavbarPage extends Component {
             <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
               <MDBNavbarNav left>
                 <MDBNavItem>
-                  <MDBDropdown >
-                    <MDBDropdownToggle nav caret color="primary">
-                      My List
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu basic className="dropdown-default">
-                    <MDBNavItem><MDBDropdownItem href="/today_list" >Today List</MDBDropdownItem></MDBNavItem>
-                    <MDBNavItem><MDBDropdownItem href="/Other_list">Past List</MDBDropdownItem></MDBNavItem>
-                    <MDBNavItem><MDBDropdownItem href="#!">Future List</MDBDropdownItem></MDBNavItem></MDBDropdownMenu>
-                  </MDBDropdown>
+                  <MDBNavLink to="/today_list" onClick={()=>{this.setState({ isOpen:false});}}>My List</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
                   <MDBNavLink to="/about" onClick={()=>{this.setState({ isOpen:false});}}>About</MDBNavLink>
@@ -118,7 +110,7 @@ class NavbarPage extends Component {
                     {
                       this.props.authenticated ? 
                       ( <MDBDropdownMenu className="dropdown-default">
-                        <MDBDropdownItem><Link to="/profile"><i class="far fa-user"></i> Profile</Link></MDBDropdownItem>
+                        <MDBDropdownItem onClick={()=>{this.setState({ isOpen:false});}}><Link to="/profile"><i class="far fa-user"></i> Profile</Link></MDBDropdownItem>
                       <MDBDropdownItem onClick={this.handleLogout}><MDBIcon icon="sign-out-alt"/> Log out</MDBDropdownItem>
                       </MDBDropdownMenu>)
                       :

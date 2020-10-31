@@ -15,10 +15,10 @@ class todayList extends Component {
             businessId:null,
             userType:null,
             loading:true,
-            noAppointment:false,
+            noAppointment:true,
             noBusiness:false,
             crntState:null,
-            date:new Date(),
+            date:new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
         }
     }
 
@@ -27,7 +27,7 @@ class todayList extends Component {
         if(this.props.authenticated){
             var today=this.state.date;
             var userId = firebase.auth().currentUser.uid;
-            var ref = firebase.database().ref('Appointments/'+userId+'/'+today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate())
+            var ref = firebase.database().ref('Appointments/'+userId+'/'+this.state.date.getFullYear()+'/'+(this.state.date.getMonth()+1)+'/'+this.state.date.getDate())
             var data_array=[];
             ref.on("value",(data)=>{
                 var data_list= data.val();
@@ -42,6 +42,7 @@ class todayList extends Component {
                     this.setState({
                         serviceList:data_array,
                         loading:false,
+                        noAppointment:false,
                     })   
                 }
                 else{
@@ -64,12 +65,11 @@ class todayList extends Component {
     render() {
         
         const list=this.state.serviceList.map(service=><Card service={service}/>);
-
         return (
-            <div>
+            <>
                 <Container>
                     <Row>
-                        <Col sm="6" xs="12">
+                        <Col sm="4" xs="8">
                             <DatePickerComponent
                             id="date" placeholder="Pick your date"
                             showRoundedCorner={true} showWeekend={true}
@@ -78,9 +78,15 @@ class todayList extends Component {
                             />
                         </Col>
                     </Row>
+                    <Row>
+                        <Col sm="11" xs="12">
+                        {
+                            (this.state.noAppointment)?(<div>No Appointments on this day </div>):(<div>{list}</div>)
+                        }
+                        </Col>
+                    </Row>
                 </Container>
-                {list}
-            </div>
+            </>
         )
     }
 }

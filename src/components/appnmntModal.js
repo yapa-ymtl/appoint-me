@@ -12,7 +12,6 @@ import image from '../assets/calendar.png'
 class Appointment extends Component {
   constructor() {
     super(...arguments);
-
     
     var today = new Date(),
     date  = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -27,6 +26,7 @@ class Appointment extends Component {
       formattedValue:null,
       title:null,
       description:'',
+      crntState:'to be',
       businessId:this.props.match.params.id, 
       workingDays:{Sunday:true,Monday:true,Tuesday:true,Wednesday:true,Thursday:true,Friday:true,Saturday:false},
     }
@@ -70,7 +70,8 @@ class Appointment extends Component {
       description:this.state.description,
       number:'5',
       time:'9:00',
-      businessId:this.state.businessId
+      businessId:this.state.businessId,
+      crntState:this.state.crntState,
     }).key; 
 
     firebase.database().ref('Appointments/'+this.state.businessId+'/'+dateDirect+'/'+newKey).set({
@@ -79,7 +80,8 @@ class Appointment extends Component {
       description:this.state.description,
       number:'5',
       time:'9:00',
-      userId:userId,
+      userId:userId,      
+      crntState:this.state.crntState,
     }); 
   }
 
@@ -97,7 +99,7 @@ class Appointment extends Component {
   } 
 
   render(){
-    console.log(this.state.workingDays.Sunday);
+    
     const businessTypes = [
       {label:'Take a number',value:"Take a number"},
       {label:"Select fixed time",value:"Select fixed time"},
