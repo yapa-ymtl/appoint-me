@@ -48,25 +48,38 @@ class SignuBusiness extends Component{
       
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
     .catch((error) =>{
-      // Handle Errors here.
-      
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log("error code "+ errorCode);
-      console.log("error "+ error)
-      if (errorCode == 'auth/weak-password') {
-        alert('The password is too weak.');
-        this.setState({
-          creatUser:false,
-        })
-      } 
-      else {
-        alert(errorMessage);
-        this.setState({
-          creatUser:false,
-        })
+        // Handle Errors here.
+        
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log("error code "+ errorCode);
+        console.log("error "+ error)
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+          this.setState({
+            creatUser:false,
+          })
+        } 
+        else if(errorCode == "auth/email-already-in-use" || errorCode =="auth/invalid-email") {
+          alert("Please check your email again!");
+          this.setState({
+            creatUser:false,
+          })
+        }
+        else if(errorCode == "auth/operation-not-allowed") {
+          alert("This email is not allowed!");
+          this.setState({
+            creatUser:false,
+          })
+        }
+        else {
+          alert("Erorr signup , Please try again");
+          this.setState({
+            creatUser:false,
+          })
+        }
+
       }
-     }
     )
     .then((data)=>{
       if(this.state.creatUser)
@@ -81,7 +94,8 @@ class SignuBusiness extends Component{
           workingDays:this.state.workingDays,
           startTime:"06:00",
           finishTime:"18:00",
-        }); 
+        });
+         
       }
       alert("Please set up your profile first.")
       this.setState({

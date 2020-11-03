@@ -8,12 +8,11 @@ import firebase from 'firebase'
 import Navigation from './Navigation'
 import Footer from './footer'
 import About from './About'
-import Mylist from './Mylist'
 import Appointment from './appnmntModal'
 import Rate from './rateUs'
 import Profile from './profile'
 import Home from './home';
-import TodayList from './todayList'
+import TodayList from './MyList'
 
 
 
@@ -77,7 +76,6 @@ class Main extends Component {
                     <Switch>
                         <Route path="/" exact component={(props)=>(<Home {...props} authenticated={this.state.userType}/>)}/>
                         <Route path="/about" component={About}/>
-                        <Route path="/mylist" component={Mylist}/>
                         <Route path="/jdjowanajk"  component={ResetPassword}/>
                         <Route path="/rate" component={Rate}/>
                         <Route path="/appointment/:id" component={(props)=>(<Appointment {...props} authenticated={this.state.authenticated}/>)}/>

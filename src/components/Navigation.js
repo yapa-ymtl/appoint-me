@@ -68,6 +68,7 @@ class NavbarPage extends Component {
 
   handleLogout=()=>{
     firebase.auth().signOut( );
+    firebase.auth().signOut( );
     this.setState({
       isOpen: !this.state.isOpen 
     })

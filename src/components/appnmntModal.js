@@ -19,7 +19,7 @@ class Appointment extends Component {
     this.state = {
       currentDateTime: date,
       appointmentType:null,
-      startTime:"09:00",
+      startTime:null,
       date:today,
       minDate:new Date().toISOString(),
       maxDate: new Date(new Date().getFullYear(), new Date().getMonth()+3, new Date().getDate()),
@@ -29,6 +29,7 @@ class Appointment extends Component {
       crntState:'to be',
       businessId:this.props.match.params.id, 
       workingDays:{Sunday:true,Monday:true,Tuesday:true,Wednesday:true,Thursday:true,Friday:true,Saturday:false},
+      number:null,
     }
 
     this.data = [{
@@ -46,8 +47,31 @@ class Appointment extends Component {
     firebase.database().ref('Users/' + this.state.businessId).once('value').then((snapshot)=> {
       this.setState({
         workingDays:snapshot.val().workingDays,
+        startTime:snapshot.val().startTime,
       })
     });
+
+    var dateDirect=this.state.date.getFullYear()+'/'+(this.state.date.getMonth()+1)+'/'+this.state.date.getDate();
+    
+    firebase.database().ref('Appointments/'+this.state.businessId+'/'+dateDirect+'/variables').once('value').then((snapshot)=> {
+      var num=(snapshot.val().count)+1;
+      this.setState({
+        number:num,
+      })
+    }).catch((error)=>{
+      if(error)
+      {
+        console.log("eroor");
+        this.setState({
+          number:1,
+        })
+      }
+      else{
+        console.log("no erojoajj");
+      }
+    })
+    
+
   }
 
   handleChange=(e)=>{
@@ -68,7 +92,7 @@ class Appointment extends Component {
       appointmentDate:this.state.date.toISOString(),
       title:this.state.title,
       description:this.state.description,
-      number:'5',
+      number:this.state.number,
       time:'9:00',
       businessId:this.state.businessId,
       crntState:this.state.crntState,
@@ -78,13 +102,19 @@ class Appointment extends Component {
       appointmentDate:this.state.date.toISOString(),
       title:this.state.title,
       description:this.state.description,
-      number:'5',
+      number:this.state.number,
       time:'9:00',
       userId:userId,      
       crntState:this.state.crntState,
     }); 
+
+    
+    firebase.database().ref('Appointments/'+this.state.businessId+'/'+dateDirect+'/variables').update({
+      count:this.state.number,
+    });
   }
 
+  
   disable=(args)=> { 
     if ((args.date.getDay() == 0 && !this.state.workingDays.Sunday) || 
         (args.date.getDay() == 1 && !this.state.workingDays.Monday) ||
@@ -99,7 +129,7 @@ class Appointment extends Component {
   } 
 
   render(){
-    
+
     const businessTypes = [
       {label:'Take a number',value:"Take a number"},
       {label:"Select fixed time",value:"Select fixed time"},
@@ -143,7 +173,8 @@ class Appointment extends Component {
               (
                 <div className="container">
                   <div className="row">
-                    <div className="col" fluid={true}> Your number is <Badge color="danger" pill> 5</Badge></div>
+                    <div className="col" fluid={true}> Your number is <Badge color="danger" pill> {this.state.number}</Badge></div>
+
                   </div>
                   <form  onSubmit={this.handleSubmit}>
                     <div className="row" style={{marginTop:10}}>

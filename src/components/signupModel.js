@@ -53,12 +53,24 @@ class SignupModel extends Component{
           creatUser:false,
         })
       } 
-      else {
-        alert(errorMessage);
+      else if(errorCode == "auth/email-already-in-use" || errorCode =="auth/invalid-email") {
+        alert("Please check your email again!");
         this.setState({
           creatUser:false,
         })
-      }      
+      }
+      else if(errorCode == "auth/operation-not-allowed") {
+        alert("This email is not allowed!");
+        this.setState({
+          creatUser:false,
+        })
+      }
+      else {
+        alert("Erorr signup , Please try again");
+        this.setState({
+          creatUser:false,
+        })
+      }    
     })
     .then((data)=>{
       if(this.state.creatUser)
