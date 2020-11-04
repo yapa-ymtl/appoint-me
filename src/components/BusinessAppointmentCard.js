@@ -4,7 +4,7 @@ import {MDBBtn,MDBIcon} from "mdbreact";
 import CancleModal from './appointmentCancleModel'
 import firebase from 'firebase'
 
-export default class todayListCard extends Component {
+export default class BusinessAppointmentCard extends Component {
     constructor(props) {
         super(props)
     
@@ -16,6 +16,7 @@ export default class todayListCard extends Component {
     recieveChildValue=(e)=>{
         if(e==1)
         {
+            this.props.fromChild(this.props.service.number);
             var dateDirect=this.props.date.getFullYear()+'/'+(this.props.date.getMonth()+1)+'/'+this.props.date.getDate();
             var userId = firebase.auth().currentUser.uid;
             firebase.database().ref('Appointments/'+userId+'/'+dateDirect+'/'+this.props.service.key).update({
@@ -41,20 +42,7 @@ export default class todayListCard extends Component {
                     {
                         this.props.service.crntState==="cancled"?
                         (
-                            <Card body outline color="danger">
-                                <CardTitle><b>{this.props.service.title}</b></CardTitle>
-                                <CardText>
-                                    <Row>
-                                        <Col sm="10" xs="12">
-                                            {this.props.service.description}
-                                        </Col>
-                                        <Col sm="2" xs="4">                                        
-                                            <MDBBtn size="sm" color="danger" disabled={true}>Cancled</MDBBtn>
-                                            <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
-                                        </Col>
-                                    </Row>
-                                </CardText>
-                            </Card>
+                            <></>
                         )
                         :
                         (
@@ -69,7 +57,6 @@ export default class todayListCard extends Component {
                                             </Col>
                                             <Col sm="2" xs="2">                                        
                                             <MDBBtn size="sm" color="success" disabled={true} >done</MDBBtn>
-                                            <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
                                             </Col>
                                         </Row>
                                     </CardText>
@@ -78,18 +65,17 @@ export default class todayListCard extends Component {
                             :
                             (
                                 <Card body outline color="info">
-                                    <CardTitle><Badge size="lg">{this.props.service.number}</Badge><b>{this.props.service.title}</b></CardTitle>
+                                    <CardTitle><Badge size="lg">{this.props.service.number}</Badge><b> {this.props.service.title}</b></CardTitle>
                                     <CardText>
                                         <Row>
                                             <Col sm="8" xs="12">
                                                 {this.props.service.description}
                                             </Col>
-                                            <Col sm="2" xs="4">                                        
+                                            <Col sm="2" xs="6">                                        
                                                 <MDBBtn size="sm" color="success" >Finished</MDBBtn>
                                             </Col>
-                                            <Col xs="1"></Col>
-                                            <Col sm="2" xs="4">                                        
-                                                <MDBBtn size="sm" color="danger" >Remove</MDBBtn>
+                                            <Col sm="2" xs="6">                                        
+                                            <MDBBtn size="sm" color="danger"  onClick={()=>this.setState({addCancleModelShow:true,isOpen: false})} >Remove</MDBBtn>
                                                 <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
                                             </Col>
                                         </Row>

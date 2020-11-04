@@ -14,6 +14,7 @@ class todayList extends Component {
 
         this.state={
             serviceList:[],
+            serviceList1:[],
             keyList:null,
             businessId:null,
             userType:null,
@@ -64,17 +65,79 @@ class todayList extends Component {
         this.componentWillMount();
     }
 
+    recieveChildValue=(e,businessId=null)=>{
+        if(this.props.authenticated==="business")
+        {
+            var userId = firebase.auth().currentUser.uid;
+            var dateDirection = this.state.date.getFullYear()+'/'+(this.state.date.getMonth()+1)+'/'+this.state.date.getDate();
+            for(var i in this.state.serviceList)
+            {
+                if(this.state.serviceList[i].number>e)
+                {
+                    firebase.database().ref('Appointments/'+userId+'/'+dateDirection+'/'+this.state.serviceList[i].key).update({
+                        number:this.state.serviceList[i].number-1,
+                        }
+                    );
+                    firebase.database().ref('Appointments/'+this.state.serviceList[i].userId+'/'+dateDirection+'/'+this.state.serviceList[i].key).update({
+                        number:this.state.serviceList[i].number,
+                        }
+                    );
+                }
+            }
+        }
+
+        if(this.props.authenticated==="client")
+        {
+            var dateDirection = this.state.date.getFullYear()+'/'+(this.state.date.getMonth()+1)+'/'+this.state.date.getDate();
+            var ref = firebase.database().ref('Appointments/'+businessId+'/'+dateDirection)
+            var data_array=[];
+            ref.on("value",(data)=>{
+                var data_list= data.val();
+                if(data_list)
+                {
+                    var keys=Object.keys(data_list);
+                    for(var i=0;i<keys.length;i++)
+                    { 
+                        data_array[i]=data_list[keys[i]];
+                        data_array[i].key=keys[i];
+                    } 
+
+                    for(var i in data_array)
+                    {
+                        if(data_array[i].number>e )
+                        {
+                            firebase.database().ref('Appointments/'+businessId+'/'+dateDirection+'/'+data_array[i].key).update({
+                                number:data_array[i].number-1,
+                                }
+                            );
+                            firebase.database().ref('Appointments/'+businessId+'/'+dateDirection+'/variables').update({
+                                count:data_array[i].number,
+                                }
+                            );
+                            firebase.database().ref('Appointments/'+data_array[i].userId+'/'+dateDirection+'/'+data_array[i].key).update({
+                                number:data_array[i].number,
+                                }
+                            );
+                            
+                        }
+                    }
+                    
+                }
+            })
+            
+        }
+    }
+
 
     render() {
-        console.log("*******"+this.props.authenticated);
         var list;
         if(this.props.authenticated==="client")
         {
-            list=this.state.serviceList.map(service=><ClientCard service={service} date={this.state.date}/>);
+            list=this.state.serviceList.map(service=><ClientCard service={service} date={this.state.date} fromChild={this.recieveChildValue}/>);
         }
         else if(this.props.authenticated==="business")
         {
-            list=this.state.serviceList.map(service=><BusinessCard service={service} date={this.state.date}/>);
+            list=this.state.serviceList.map(service=><BusinessCard service={service} date={this.state.date} fromChild={this.recieveChildValue}/>);
         }
         
         return (

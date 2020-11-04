@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {Card, CardImg, CardTitle, CardText, CardColumns,CardSubtitle, CardBody, Row, Col} from 'reactstrap';
+import {Card, CardImg, CardTitle, CardText, CardColumns,CardSubtitle,Badge, CardBody, Row, Col} from 'reactstrap';
 import {MDBBtn,MDBIcon} from "mdbreact";
 import CancleModal from './appointmentCancleModel'
 import firebase from 'firebase'
 
-export default class todayListCard extends Component {
+export default class ClientAppointmentCard extends Component {
     constructor(props) {
         super(props)
     
@@ -16,6 +16,7 @@ export default class todayListCard extends Component {
     recieveChildValue=(e)=>{
         if(e==1)
         {
+            this.props.fromChild(this.props.service.number,this.props.service.businessId);
             var dateDirect=this.props.date.getFullYear()+'/'+(this.props.date.getMonth()+1)+'/'+this.props.date.getDate();
             var userId = firebase.auth().currentUser.uid;
             firebase.database().ref('Appointments/'+userId+'/'+dateDirect+'/'+this.props.service.key).update({
@@ -77,7 +78,7 @@ export default class todayListCard extends Component {
                             :
                             (
                                 <Card body outline color="info">
-                                    <CardTitle><b>{this.props.service.title}</b></CardTitle>
+                                    <CardTitle><Badge>{this.props.service.number}</Badge><b> {this.props.service.title}</b></CardTitle>
                                     <CardText>
                                         <Row>
                                             <Col sm="10" xs="12">
