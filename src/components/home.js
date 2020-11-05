@@ -38,10 +38,16 @@ class Home extends Component {
                 if(data_list)
                 {
                     var keys=Object.keys(data_list);
+
+                    var j=0;
                     for(var i=0;i<keys.length;i++)
                     { 
-                        data_array[i]=data_list[keys[i]];
-                        data_array[i].key=keys[i];
+                        if(data_list[keys[i]].crntState==="to be")
+                        {
+                            data_array[j]=data_list[keys[i]];
+                            data_array[j].key=keys[i];
+                            j++;
+                        }
                     } 
                     this.setState({
                         serviceList:data_array,
@@ -101,7 +107,6 @@ class Home extends Component {
             if(data_list)
             {
                 var keys=Object.keys(data_list);
-
                 var j=0;
                 for(var i=0;i<keys.length;i++)
                 { 
@@ -163,7 +168,7 @@ class Home extends Component {
                     <div class="py-5"style={{backgroundColor:'rgba(253,237,236,0.7)',borderRadius:10} }>
                         <h2 className="card-title h2 my-4 py-2" style={{color:'black'}}>Why are you wasting time in a queue?</h2>
                         <p className="mb-4 pb-2 px-md-5 mx-md-5" style={styleParagraph}>Make an appointment easily from the world best appointment website. It will make your job easier</p>
-                        <MDBBtn rounded size="lg"  className="btn "gradient="aqua"><MDBIcon icon="plus" className="ml-2" onclick={this.makeAppointment} />   Make an appointment</MDBBtn>
+                        {/* <MDBBtn rounded size="lg"  className="btn "gradient="aqua"><MDBIcon icon="plus" className="ml-2" onclick={this.makeAppointment} />   Make an appointment</MDBBtn> */}
                     </div>
                 </div>
             </div> 
@@ -172,9 +177,9 @@ class Home extends Component {
             {
                 this.props.authenticated==="business"?
                 (
-                    <div>
-                        {this.state.noAppointment?<h2 >No appointments today </h2>:{apponointments}}  
-                    </div>
+                    <>
+                    {this.state.noAppointment?<div >No appointments today </div>:<div>{apponointments}</div>}
+                    </>  
                 ):
                 (
                     <>

@@ -58,26 +58,35 @@ class Appointment extends Component {
       this.setState({
         number:num,
       })
-    }).catch((error)=>{
-      if(error)
-      {
-        console.log("eroor");
-        this.setState({
-          number:1,
-        })
-      }
-      else{
-        console.log("no erojoajj");
-      }
-    })
+    });
     
 
+  }
+
+  dateChanged=(newDate)=>{
+    var dateDirect=newDate.getFullYear()+'/'+(newDate.getMonth()+1)+'/'+newDate.getDate();
+    
+    firebase.database().ref('Appointments/'+this.state.businessId+'/'+dateDirect+'/variables').once('value').then((snapshot)=> {
+      var num=(snapshot.val().count)+1;
+      this.setState({
+        number:num,
+      })
+    }).catch((error)=>
+    {
+      this.setState({
+        number:1,
+      })
+    });
   }
 
   handleChange=(e)=>{
     this.setState({
       [e.target.id]:e.target.value
     })
+    if(e.target.id==="date")
+    {
+      this.dateChanged(e.target.value);
+    }
   }
 
   handleSelect=(e)=>{   

@@ -53,7 +53,7 @@ export default class ClientAppointmentCard extends Component {
                         this.props.service.crntState==="cancled"?
                         (
                             <Card body outline color="danger">
-                                <CardTitle><b>{this.props.service.title}</b></CardTitle>
+                                <CardTitle><b>{this.props.service.title}</b><i style={{fontSize:13}}> at {this.state.businessName}</i></CardTitle>
                                 <CardText>
                                     <Row>
                                         <Col sm="10" xs="12">
@@ -71,15 +71,15 @@ export default class ClientAppointmentCard extends Component {
                         (
                             this.props.service.crntState==="done"?
                             (
-                                <Card body outline color="danger">
-                                    <CardTitle><b>{this.props.service.title}</b></CardTitle>
+                                <Card body outline color="success">
+                                    <CardTitle><b>{this.props.service.title}</b><i style={{fontSize:13}}> at {this.state.businessName}</i></CardTitle>
                                     <CardText>
                                         <Row>
                                             <Col sm="10" xs="12">
                                                 {this.props.service.description}
                                             </Col>
                                             <Col sm="2" xs="2">                                        
-                                            <MDBBtn size="sm" color="danger" disabled={true} >Cancled</MDBBtn>
+                                            <MDBBtn size="sm" color="success" disabled={true} >Done</MDBBtn>
                                             <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
                                             </Col>
                                         </Row>

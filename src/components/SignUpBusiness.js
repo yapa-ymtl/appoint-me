@@ -89,7 +89,7 @@ class SignuBusiness extends Component{
           email: this.state.email,
           RegNo:this.state.registration_num,
           businessTypes:this.state.business_type,
-          type:this.state.business_type,
+          type:"business",
           imageURL:"https://firebasestorage.googleapis.com/v0/b/appointme-17cfe.appspot.com/o/profilePic%2Fgroup%20dp.png?alt=media&token=52b8eef0-465a-46c5-b2ce-a2b4367bac24",
           workingDays:this.state.workingDays,
           startTime:"06:00",
