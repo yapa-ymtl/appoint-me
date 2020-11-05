@@ -33,6 +33,19 @@ export default class BusinessAppointmentCard extends Component {
 
     }
 
+    appointmentFinished=()=>{
+        var dateDirect=this.props.date.getFullYear()+'/'+(this.props.date.getMonth()+1)+'/'+this.props.date.getDate();
+        var userId = firebase.auth().currentUser.uid;
+        firebase.database().ref('Appointments/'+userId+'/'+dateDirect+'/'+this.props.service.key).update({
+            crntState:"done",
+        });
+        
+        firebase.database().ref('Appointments/'+this.props.service.userId+'/'+dateDirect+'/'+this.props.service.key).update({
+            crntState:"done",
+        });
+        this.props.fromChild(this.props.service.number);
+    }
+
     render() {
         let addCancleModelClose=()=>this.setState({addCancleModelShow:false});
         if(typeof this.props.service !== 'undefined')
@@ -49,7 +62,7 @@ export default class BusinessAppointmentCard extends Component {
                             this.props.service.crntState==="done"?
                             (
                                 <Card body outline color="success">
-                                    <CardTitle><Badge>{this.props.service.number}</Badge><b>{this.props.service.title}</b></CardTitle>
+                                    <CardTitle><b>{this.props.service.title}</b></CardTitle>
                                     <CardText>
                                         <Row> 
                                             <Col sm="10" xs="12">
@@ -64,23 +77,29 @@ export default class BusinessAppointmentCard extends Component {
                             )
                             :
                             (
-                                <Card body outline color="info">
-                                    <CardTitle><Badge size="lg">{this.props.service.number}</Badge><b> {this.props.service.title}</b></CardTitle>
-                                    <CardText>
-                                        <Row>
-                                            <Col sm="8" xs="12">
-                                                {this.props.service.description}
-                                            </Col>
-                                            <Col sm="2" xs="6">                                        
-                                                <MDBBtn size="sm" color="success" >Finished</MDBBtn>
-                                            </Col>
-                                            <Col sm="2" xs="6">                                        
-                                            <MDBBtn size="sm" color="danger"  onClick={()=>this.setState({addCancleModelShow:true,isOpen: false})} >Remove</MDBBtn>
-                                                <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
-                                            </Col>
-                                        </Row>
-                                    </CardText>
-                                </Card>
+                                this.props.service.crntState==="to be"?
+                                (
+                                    <Card body outline color="info">
+                                        <CardTitle><Badge size="lg">{this.props.service.number}</Badge><b> {this.props.service.title}</b></CardTitle>
+                                        <CardText>
+                                            <Row>
+                                                <Col sm="8" xs="12">
+                                                    {this.props.service.description}
+                                                </Col>
+                                                <Col sm="2" xs="6">                                        
+                                                    <MDBBtn size="sm" style={{color:"white"}} onClick={this.appointmentFinished} >Finished</MDBBtn>
+                                                </Col>
+                                                <Col sm="2" xs="6">                                        
+                                                <MDBBtn size="sm" color="danger"  onClick={()=>this.setState({addCancleModelShow:true,isOpen: false})} >Remove</MDBBtn>
+                                                    <CancleModal show={this.state.addCancleModelShow} onHide={addCancleModelClose} fromChild={this.recieveChildValue}/>
+                                                </Col>
+                                            </Row>
+                                        </CardText>
+                                    </Card>
+                                ):
+                                (
+                                    <></>
+                                )
                             )
 
                         )

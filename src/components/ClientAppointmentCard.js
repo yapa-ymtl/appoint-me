@@ -10,7 +10,17 @@ export default class ClientAppointmentCard extends Component {
     
         this.state = {
             addCancleModelShow:false,
+            businessName:null,
         }
+    }
+
+    componentWillMount()
+    {
+        firebase.database().ref('Users/' + this.props.service.businessId).once('value').then((snapshot)=> {
+            this.setState({
+                businessName:snapshot.val().username,
+            })
+          });
     }
 
     recieveChildValue=(e)=>{
@@ -31,6 +41,7 @@ export default class ClientAppointmentCard extends Component {
         })
 
     }
+
 
     render() {
         let addCancleModelClose=()=>this.setState({addCancleModelShow:false});
@@ -78,7 +89,7 @@ export default class ClientAppointmentCard extends Component {
                             :
                             (
                                 <Card body outline color="info">
-                                    <CardTitle><Badge>{this.props.service.number}</Badge><b> {this.props.service.title}</b></CardTitle>
+                                    <CardTitle><Badge style={{fontSize:23}}>{this.props.service.number}</Badge><b style={{fontSize:20}}> {this.props.service.title}</b><i style={{fontSize:13}}> at {this.state.businessName}</i></CardTitle>
                                     <CardText>
                                         <Row>
                                             <Col sm="10" xs="12">
